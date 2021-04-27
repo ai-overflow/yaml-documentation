@@ -2,13 +2,11 @@
 title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - ruby
-  - python
-  - javascript
+  - yaml
+  - json
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
+  - <a href='https://github.com/ai-overflow/example-project'>Demo Repository</a>
   - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
 
 includes:
@@ -19,223 +17,212 @@ search: true
 code_clipboard: true
 ---
 
-# Introduction
+# Einleitung
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+In dieser Dokumentation wird spezifiziert, wie Sie ihre Deep Learning Projekte mithilfe einer `config.dl.yaml` erfolgreich beschreiben.
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+# Aufbau des Projekts
 
-This example API documentation page was created with [Slate](https://github.com/slatedocs/slate). Feel free to edit it and use it as a base for your own API's documentation.
+> Ihr Projekt muss folgende Ordnerstruktur besitzen:
 
-# Authentication
-
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
 ```
+Name                  Typ     Beschreibung
+----                  ---     ---
+src                   Ordner  Ihre Projektdaten
+.gitignore            Datei   [optional] .gitignore
+config.dl.yaml        Datei   Beschreibungsdatei ihres Projekts
+docker-compose.yml    Datei   docker-compose, welche ihr Projekt startet
+Dockerfile            Datei   [optional] Dockerfile
+LICENSE               Datei   [optional] Lizenz ihres Projekts
+README.md             Datei   Projektbeschreibung
+```
+
+Wenn Sie ihr Projekt erstellen muss dieses der Vorgegebenen Ordnerstruktur entsprechen.
+
+Optionale Elemente müssen bei der Abgabe nicht in ihrem Projekt vorhanden sein, sind aber "nice to have".
+Weitere Elemente, welche nicht von "optional" abgedeckt sind, können ebenfalls in ihrem Hauptverzeichnis vorhanden sein.
+Alle Elemente, welche im gezeigten Beispiel nicht mit "optional" gekennzeichnet sind, müssen vorhanden sein
+
+# Einstieg
+
+> /src/app/views.py
 
 ```python
-import kittn
+from app import app
+import json
 
-api = kittn.authorize('meowmeowmeow')
+
+@app.route('/image/test/<seed>/', methods=['POST'])
+def algo_test(seed):
+  random.seed(seed)
+  text = "Seed: {seed:}\n".format(seed = seed)
+  results = [random.random() for i in range(10)]
+  return json.dumps({"text": text, "rnd": results})
 ```
 
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here" \
-  -H "Authorization: meowmeowmeow"
+> config:
+
+```yaml
+entryPoint: main
+name: Example Project
+connection:
+  main:
+    port: 8085
+    path: /image/test/{{input.sliderA}}/
+    method: POST
+input:
+  sliderA:
+    type: slider
+    label: Seed
+    values:
+      min: 0
+      max: 1
+      stepSize: 0.01
+output:
+  firstRandomNr:
+    type: html
+    label: "First Random Number"
+    format:
+      labelValue: "root/rnd[0]"
 ```
 
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
+```json
+{
+  "entryPoint": "main",
+  "name": "Example Project",
+  "connection": {
+    "main": {
+      "port": 8085,
+      "path": "/image/test/{{input.sliderA}}/",
+      "method": "POST"
+    }
+  },
+  "input": {
+    "sliderA": {
+      "type": "slider",
+      "label": "Seed",
+      "values": {
+        "min": 0,
+        "max": 1,
+        "stepSize": 0.01
+      }
+    }
+  },
+  "output": {
+    "firstRandomNr": {
+      "type": "html",
+      "label": "First Random Number",
+      "format": {
+        "labelValue": "root/rnd[0]"
+      }
+    }
+  }
+}
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+Zum starten müssen sie die Datei `config.dl.yaml` in ihrem Hauptverzeichnis anlegen. Ersetzen Sie den Namen ihres Projektes durch einen aussagekräftigen, menschenlesbaren Titel zur Beschreibung ihres Projektes an.
+Anschließend müssen Sie die Verbindung, welche verwendet werden soll um ihrem Projekt Daten zu übergeben zu spezifizieren. Nähere Informationen hierzu finden Sie im Abschnitt [Verbindung](#Verbindung).
+Am Anfang können Sie den Port, Pfad, sowie die HTTP-Methode auswählen. Wenn Sie gerne einen Input referenzieren wollen, so verwenden Sie hierzu die Syntax `{{input.NAME}}`. Näheres hierzu finden Sie im Abschnitt [Variablen](#Variablen).
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+In diesem Beispiel wird als Input ein Slider verwendet, welcher die Werte 0-1 mit der Schrittweite 0.01 akzeptiert. Das Label wird "Seed" sein.
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
+Die Ausgabe wird der erste Eintrag des Rückgabewertes von "rnd" sein. Näheres hierzu finden Sie im Abschnitt [Ausgabe](#Ausgabe).
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+Wenn Sie JSON zur Beschreibung ihres Projekts verwenden, müssen Sie die Datei <code>config.dl.json</code> nennen
 </aside>
 
-# Kittens
+# Struktur
 
-## Get All Kittens
+> Die oberste Ebene der Konfigurationsdatei besteht immer aus den folgenden Schlüsseln:
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
+```yaml
+entryPoint: ...
+name: "Test"
+description: "Lorem Ipsum"
+authors:
+  - "John Doe"
+connection: ...
+input: ...
+output: ...
 ```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens" \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2" \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "entryPoint": "...",
+  "name": "Test",
+  "description": "Lorem Ipsum",
+  "authors": [
+    "John Doe"
+  ],
+  "connection": {},
+  "input": {},
+  "output": {}
 }
 ```
+### entryPoint
 
-This endpoint retrieves a specific kitten.
+Der Entry Point beschreibt den ersten Request, welcher zum verschicken der Inputs verwendet werden soll. Dieser Request wird immer nach dem abschicken der Eingabe durchgeführt.
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+### Name
 
-### HTTP Request
+Der Name ist ein für Menschen lesbarer Titel des Projekts. Folgende Liste zeigt einige gute und schlechte Beispiele für einen Titel auf:
 
-`GET http://example.com/kittens/<ID>`
+| Ok  | Name                                | Erklärung                                                                                                                      |
+| --- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| ❌   | StudPro-2020WS-T01                  | Bitte nicht die Teambezeichnung als Name wählen                                                                                |
+| ❌   | CNN/RNN Objekterkennung Zun et. al. | Bitte keine Erklärung zum zugrundeliegenden Algorithmus oder Autor verwenden. Verwenden Sie hierzu "author" oder "description" |
+| ❌   | Obj                                 | Funktionsweise nicht eindeutig                                                                                                 |
+| ✔️   | Objekterkennung                     |                                                                                                                                |
 
-### URL Parameters
+### Description
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+> Mehrzeilige Beschreibung
 
-## Delete a Specific Kitten
+```yaml
+description: |
+  ### Heading
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
+  * Bullet
+  * Points
 ```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2" \
-  -X DELETE \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "deleted" : ":("
+  "description": "### Heading\n\n* Bullet\n* Points\n"
 }
 ```
 
-This endpoint deletes a specific kitten.
 
-### HTTP Request
+Die Beschreibung kann alle Informationen beinhalten, welche nicht direkt im Titel enthalten sind, so können unter anderem genaue Algorithmen, Funktionsweise, Zitate und ähnliches verwendet werden. Die Beschreibung unterstützt zudem Markdown zur Formatierung.
 
-`DELETE http://example.com/kittens/<ID>`
+Sofern Sie bereits eine ausführliche README haben, muss die Description nicht sehr ausführlich sein, sondern es genügt ein Verweis auf die README.
 
-### URL Parameters
+<aside class="warning">Binden Sie bitte keine externen Bilder, große Tabellen oder ähnliche größere Elemente, welche die Formatierung zerstören können ein. Versuchen Sie, wenn möglich nur wichtige Inhalte hervorzuheben, sofern Sie Markdown verwenden.</aside>
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
+### Authors
+
+```yaml
+authors:
+  - "John Doe"
+  - "Max Mustermann"
+  - "Erika Mustermann, M. Sc."
+```
+
+```json
+{
+  "authors": [
+    "John Doe",
+    "Max Mustermann",
+    "Erika Mustermann, M. Sc."
+  ]
+}
+```
+
+In "Authors" können die Autoren des Projekts genannt werden. Hierbei sollten nur die Namen der beteiligten Studenten verwendet werden. Für die Nennung von Teilnehmer Zugrundeliegender Paper verwenden Sie bitte die Beschreibung (`description`).
+
+Die Autoren sind eine Liste von Strings, womit es möglich ist auch mehrere Teilnehmer inkl. Titel anzugeben.
+
+# Verbindung
+
 
