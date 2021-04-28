@@ -206,7 +206,7 @@ Sofern Sie bereits eine ausführliche README haben, muss die Description nicht s
 authors:
   - "John Doe"
   - "Max Mustermann"
-  - "Erika Mustermann, M. Sc."
+  - "Erika Musterfrau, M. Sc."
 ```
 
 ```json
@@ -493,14 +493,123 @@ input:
 
 Um ein Eingabeelement, welches Bild akzeptiert zu erstellen muss als Typ `image` angegeben werden. Hierbei können verschiedene Einschränkungen angegeben werden, wie in der Nachfolgenden Tabelle gesehen werden kann:
 
-| Schlüssel | Beschreibung                                                         | Mögliche Werte                |
-|-----------|----------------------------------------------------------------------|-------------------------------|
-| accepts   | Liste akzeptierter MIME-Types. Muss **immer** `image/jpg` beinhalten | `image/jpg`, `image/png`, ... |
-| value     | Übergabewert der Datei                                               | `binary`, `base64`            |
+| Schlüssel | Beschreibung                                                         | Mögliche Werte                | Pflicht |
+|-----------|----------------------------------------------------------------------|-------------------------------|---------|
+| accepts   | Liste akzeptierter MIME-Types. Muss **immer** `image/jpg` beinhalten | `image/jpg`, `image/png`, ... |   ❌    |
+| output    | Übergabewert der Datei                                               | `binary`, `base64`            |   ✔️    |
+
+### Rückgabewert
+
+Wenn `output` als `base64` definiert ist:
+
+- `data:image/jpeg;base64,/9j/4AAQSkZJRgABAQA...`
+
+Wenn `output` als `binary` definiert ist:
+
+- [binary blob]
 
 ## Input, Textarea
 
+```yaml
+input:
+  inputA:
+    label: "Name"
+    type: "input"
+    values:
+      regex: "[A-Za-z0-9]+"
+      length:
+        min: 100
+        max: 5000
+```
 
+| Schlüssel | Beschreibung                                             | Mögliche Werte              | Pflicht |
+|-----------|----------------------------------------------------------|-----------------------------|---------|
+| regex     | Regex zur Beschreibung möglicher Werte                   | `[A-Z]+`, `\s?(.*?)`        | ❌       |
+| length    | Länge der Eingabe. Wird mittels max und min spezifiziert | `min: 10` <br />  `max: 20` | ❌       |
+
+### Rückgabewert
+
+- UTF-8 Text
+- **Beispiele:**
+  - `Test ABC`
+  - `John Doe`
+  - `😎😎`
+
+## Slider
+
+```yaml
+input:
+  sliderA:
+    label: "Bias"
+    type: "slider"
+    values:
+      min: 0
+      max: 100
+      stepSize: 0.1
+```
+
+| Schlüssel | Beschreibung                              | Mögliche Werte       | Pflicht |
+|-----------|-------------------------------------------|----------------------|---------|
+| min       | Minimalwert, muss kleiner als `max` sein  | `10`, `0.01`, `-20`  | ❌       |
+| max       | Maximalwert, muss größer `min` sein       | `10000`, `1`, `0.5`  | ❌       |
+| stepSize  | Schrittgröße, muss größer 0 sein          | `1`, `100`, `0.0001` | ❌       |
+
+### Rückgabewert
+
+- `numeric` im definierten Zahlenraum. Wenn stepSize < 1 ist, so ist der Rückgabewert ein `float`
+- **Beispiele:**
+  - `0.01`
+  - `100`
+  - `-204.2`
+
+## Select, Radio
+
+```yaml
+input:
+  checkboxA:
+    label: "Creator"
+    type: "checkbox"
+    values:
+      - "Dude A"
+      - "Dude B"
+      - "Dude C"
+```
+
+| Schlüssel | Beschreibung                    | Mögliche Werte             | Pflicht |
+|-----------|---------------------------------|----------------------------|---------|
+| -         | Liste an Auswählbaren Elementen | - `Test A`<br />- `Test B` | ✔️      |
+
+### Rückgabewert
+
+- Element von `values`
+- **Beispiele:**
+  - `Test A`
+  - `Test B`
+
+## Multiselect, Checkbox
+
+```yaml
+input:
+  checkboxA:
+    label: "Creator"
+    type: "multiselect"
+    values:
+      - "Dude A"
+      - "Dude B"
+      - "Dude C"
+```
+
+| Schlüssel | Beschreibung                    | Mögliche Werte             | Pflicht |
+|-----------|---------------------------------|----------------------------|---------|
+| -         | Liste an Auswählbaren Elementen | - `Test A`<br />- `Test B` | ✔️      |
+
+### Rückgabewert
+
+- Mehrere Elemente von `values`
+- Wird als JSON Array formatiert
+- **Beispiele:**
+  - `["Test A"]`
+  - `["Test A", "Test B"]`
 
 # Variablen
 
