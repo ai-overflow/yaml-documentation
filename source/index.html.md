@@ -613,4 +613,50 @@ input:
 
 # Variablen
 
+```yaml
+connection:
+  main:
+    path: "/inputA/{{input.checkboxA}}/"
+input:
+  checkboxA:
+    type: "multiselect"
+    values:
+      - "Dude A"
+```
+
+Variablen können mittels `{{NAME}}` verwendet werden. Hierbei wird zuerst der Namensraum mittels `{{NS.NAME}}` angegeben. Mögliche Werte sind hierbei `input`, `vars`, `user` und `cmd` sein.
+
+- `input` referenziert Werte aus `input`. Der Name wird anhand des Schlüssels von Input gewählt Hierbei wird der Rückgabewert des jeweiligen Typs als durch den Namen der Variable ersetzt. Zum Beispiel wird `/input/{{input.inputA}}` zu `/input/DudeA`, wenn der `inputA` den Rückgabewert `Dude` erhält.
+
+- `vars` können Werte sein, welche aus einem Output erhalten wurden und zwischengespeichert werden.
+
+- `user` sind Informationen über einen Benutzer. Hierbei sind die folgenden Werte unterstützt:
+
+| Name             | Beschreibung                     | Beispiel                                                                                                   |
+|------------------|----------------------------------|------------------------------------------------------------------------------------------------------------|
+| user.AGENT       | User Agent                       | 5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36 |
+| user.Cookie.Name | Gibt Cookie des Benutzers zurück | test123                                                                                                    |
+| user.language    | Browsersprache des Benutzers     | en-US                                                                                                      |
+
+- `cmd` sind spezielle Funktionen, welche z.B. verwendet werden können um JSON Werte auszulesen.
+
+```yaml
+rnd:
+  - test 1
+  - test 2
+```
+
+```json
+{
+  "rnd": [
+    "test 1",
+    "test 2"
+  ]
+}
+```
+
+| Name             | Beschreibung                             | Beispiel                                                                                                   |
+|------------------|------------------------------------------|------------------------------------------------------------------------------------------------------------|
+| cmd.json()       | Liest einen Wert aus einer JSON/YAML aus | cmd.json(root/rnd[0]) -> test 1                                                                            |
+
 <!-- TODO: {{user.AGENT}}, {{input.inputA}}, {{cmd.json()}} ... -->
