@@ -337,6 +337,34 @@
           </li>
           <li>
             <a href="#verbindung" class="toc-h1 toc-link" data-title="Verbindung">Verbindung</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#port-path-und-method" class="toc-h2 toc-link" data-title="Port, Path und Method">Port, Path und Method</a>
+                  </li>
+                  <li>
+                    <a href="#parameter" class="toc-h2 toc-link" data-title="Parameter">Parameter</a>
+                  </li>
+                  <li>
+                    <a href="#header" class="toc-h2 toc-link" data-title="Header">Header</a>
+                  </li>
+                  <li>
+                    <a href="#body" class="toc-h2 toc-link" data-title="Body">Body</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#eingabe" class="toc-h1 toc-link" data-title="Eingabe">Eingabe</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#image" class="toc-h2 toc-link" data-title="Image">Image</a>
+                  </li>
+                  <li>
+                    <a href="#input-textarea" class="toc-h2 toc-link" data-title="Input, Textarea">Input, Textarea</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#variablen" class="toc-h1 toc-link" data-title="Variablen">Variablen</a>
           </li>
           <li>
             <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
@@ -379,7 +407,7 @@ Alle Elemente, welche im gezeigten Beispiel nicht mit &quot;optional&quot; geken
 <span class="kn">import</span> <span class="nn">json</span>
 
 
-<span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/image/test/&lt;seed&gt;/'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">'POST'</span><span class="p">])</span>
+<span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/image/test/&lt;seed&gt;/'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">'GET'</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">algo_test</span><span class="p">(</span><span class="n">seed</span><span class="p">):</span>
   <span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
   <span class="n">text</span> <span class="o">=</span> <span class="s">"Seed: {seed:}</span><span class="se">\n</span><span class="s">"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
@@ -395,7 +423,7 @@ Alle Elemente, welche im gezeigten Beispiel nicht mit &quot;optional&quot; geken
   <span class="na">main</span><span class="pi">:</span>
     <span class="na">port</span><span class="pi">:</span> <span class="m">8085</span>
     <span class="na">path</span><span class="pi">:</span> <span class="s">/image/test/{{input.sliderA}}/</span>
-    <span class="na">method</span><span class="pi">:</span> <span class="s">POST</span>
+    <span class="na">method</span><span class="pi">:</span> <span class="s">GET</span>
 <span class="na">input</span><span class="pi">:</span>
   <span class="na">sliderA</span><span class="pi">:</span>
     <span class="na">type</span><span class="pi">:</span> <span class="s">slider</span>
@@ -436,19 +464,19 @@ Alle Elemente, welche im gezeigten Beispiel nicht mit &quot;optional&quot; geken
       </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"html"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"First Random Number"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"format"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"labelValue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"root/rnd[0]"</span><span class="w">
+        </span><span class="nl">"labelValue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{cmd.json(root/rnd[0])}}"</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>Zum starten müssen sie die Datei <code>config.dl.yaml</code> in ihrem Hauptverzeichnis anlegen. Ersetzen Sie den Namen ihres Projektes durch einen aussagekräftigen, menschenlesbaren Titel zur Beschreibung ihres Projektes an.
-Anschließend müssen Sie die Verbindung, welche verwendet werden soll um ihrem Projekt Daten zu übergeben zu spezifizieren. Nähere Informationen hierzu finden Sie im Abschnitt <a href="#Verbindung">Verbindung</a>.
-Am Anfang können Sie den Port, Pfad, sowie die HTTP-Methode auswählen. Wenn Sie gerne einen Input referenzieren wollen, so verwenden Sie hierzu die Syntax <code>{{input.NAME}}</code>. Näheres hierzu finden Sie im Abschnitt <a href="#Variablen">Variablen</a>.</p>
+Anschließend müssen Sie die Verbindung, welche verwendet werden soll um ihrem Projekt Daten zu übergeben zu spezifizieren. Nähere Informationen hierzu finden Sie im Abschnitt <a href="#verbindung">Verbindung</a>.
+Am Anfang können Sie den Port, Pfad, sowie die HTTP-Methode auswählen. Wenn Sie gerne einen Input referenzieren wollen, so verwenden Sie hierzu die Syntax <code>{{input.NAME}}</code>. Näheres hierzu finden Sie im Abschnitt <a href="#variablen">Variablen</a>.</p>
 
 <p>In diesem Beispiel wird als Input ein Slider verwendet, welcher die Werte 0-1 mit der Schrittweite 0.01 akzeptiert. Das Label wird &quot;Seed&quot; sein.</p>
 
-<p>Die Ausgabe wird der erste Eintrag des Rückgabewertes von &quot;rnd&quot; sein. Näheres hierzu finden Sie im Abschnitt <a href="#Ausgabe">Ausgabe</a>.</p>
+<p>Die Ausgabe wird der erste Eintrag des Rückgabewertes von &quot;rnd&quot; sein. Näheres hierzu finden Sie im Abschnitt <a href="#ausgabe">Ausgabe</a>.</p>
 
 <aside class="notice">
 Wenn Sie JSON zur Beschreibung ihres Projekts verwenden, müssen Sie die Datei <code>config.dl.json</code> nennen
@@ -542,7 +570,313 @@ Wenn Sie JSON zur Beschreibung ihres Projekts verwenden, müssen Sie die Datei <
 <p>In &quot;Authors&quot; können die Autoren des Projekts genannt werden. Hierbei sollten nur die Namen der beteiligten Studenten verwendet werden. Für die Nennung von Teilnehmer Zugrundeliegender Paper verwenden Sie bitte die Beschreibung (<code>description</code>).</p>
 
 <p>Die Autoren sind eine Liste von Strings, womit es möglich ist auch mehrere Teilnehmer inkl. Titel anzugeben.</p>
-<h1 id='verbindung'>Verbindung</h1><h1 id='errors'>Errors</h1>
+<h1 id='verbindung'>Verbindung</h1><div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">connection</span><span class="pi">:</span>
+  <span class="na">main</span><span class="pi">:</span>
+    <span class="s">...</span>
+  <span class="na">imageConnection</span><span class="pi">:</span>
+    <span class="s">...</span>
+  <span class="na">pizzaConnection</span><span class="pi">:</span>
+    <span class="s">...</span>
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"connection"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"main"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nl">"imageConnection"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nl">"pizzaConnection"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>Der Eintrag &quot;connection&quot; beschreibt alle möglichen Verbindungen zu Ihrem Service. Da die Möglichkeit besteht mehrere Verbindungen zu besitzen
+(Dies kann der Fall sein, wenn z.B. eine Verbindung für das Netzwerk existiert und eine weitere um Daten, wie bspw. Bilder, zu laden), müssen diese benannt werden. </p>
+
+<p>Diese Benennung kann in dem nebenstehenden Beispiel betrachtet werden.
+Hierbei werden drei Verbindungen mit den Namen <code>main</code>, <code>imageConnection</code> und <code>pizzaConnection</code> erstellt. Jede dieser Verbindungen kann auch als Wert für <code>entryPoint</code> verwendet werden.</p>
+<h2 id='port-path-und-method'>Port, Path und Method</h2>
+<blockquote>
+<p>GET http://hostname:8085/image/test/{{input.algo}}/</p>
+</blockquote>
+<div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">connection</span><span class="pi">:</span>
+  <span class="na">main</span><span class="pi">:</span>
+    <span class="na">port</span><span class="pi">:</span> <span class="m">8085</span>
+    <span class="na">path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">/image/test/{{input.algo}}/"</span>
+    <span class="na">method</span><span class="pi">:</span> <span class="s2">"</span><span class="s">GET"</span> <span class="c1"># POST, PUT, DELETE...</span>
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"connection"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"main"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">8085</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/image/test/{{input.algo}}/"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GET"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>Port, Path und Method sind die minimalen Angaben für eine funktionsfähige Verbindung. Hierbei ist zu beachten, dass der Host nicht angegeben wird. Dieser wird implizit über Docker ermittelt.</p>
+
+<aside class="notice">Wenn Sie eine externe Verbindung zu einem anderen Service (z.B. externer API) benötigen, so können Sie dies innerhalb ihres Services implementieren und die Schnittstelle nach außen weiterreichen</aside>
+
+<ul>
+<li><strong>Method</strong> unterstützt folgende Werte: <code>GET</code>,<code>PUT</code>,<code>PATCH</code>,<code>POST</code>,<code>DELETE</code>,<code>HEAD</code>,<code>COPY</code>,<code>OPTIONS</code>,<code>LINK</code>,<code>UNLINK</code>,<code>PURGE</code>,<code>LOCK</code>,<code>UNLOCK</code>,<code>PROPFIND</code>,<code>VIEW</code></li>
+<li><strong>Port</strong> unterstützt Zahlenwerte von 1024-65535. Dieser Wert kann frei gewählt werden.</li>
+<li><strong>Path</strong> kann ein beliebiger Pfad ohne Parameter (/abc/<strong>?a=b</strong>) sein. Dieser muss mit einem <code>/</code> beginnen und enden. Dieser Wert unterstützt Variablen</li>
+</ul>
+<h2 id='parameter'>Parameter</h2>
+<blockquote>
+<p>http://hostname:8085/abc/<strong>?a=1&amp;b={{input.inputA}}/</strong></p>
+</blockquote>
+<div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">connection</span><span class="pi">:</span>
+  <span class="na">main</span><span class="pi">:</span>
+    <span class="c1"># ...</span>
+    <span class="na">params</span><span class="pi">:</span>
+      <span class="na">a</span><span class="pi">:</span> <span class="s2">"</span><span class="s">1"</span>
+      <span class="na">b</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{input.inputA}}"</span>
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"connection"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"main"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"a"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"b"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{input.inputA}}"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>Parameter, wie Beispielsweise http://hostname/abc?<strong>a=1&amp;b=2</strong> werden im Feld <code>params</code> angegeben. Die Werte von Parametern unterstützen Variablen.</p>
+<h2 id='header'>Header</h2>
+<blockquote>
+<p>Header für <code>Cookie</code> und <code>User-Agent</code></p>
+</blockquote>
+<div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">connection</span><span class="pi">:</span>
+  <span class="na">main</span><span class="pi">:</span>
+    <span class="c1"># ...</span>
+    <span class="na">headers</span><span class="pi">:</span>
+      <span class="na">Cookie</span><span class="pi">:</span> <span class="s2">"</span><span class="s">SESSION-xyz"</span>
+      <span class="na">User-Agent</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Something</span><span class="nv"> </span><span class="s">Special"</span>
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"connection"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"main"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"headers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"Cookie"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SESSION-xyz"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"User-Agent"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Something Special"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>Header können analog zu Parametern angegeben werden mit dem Schlüssel <code>headers</code>. Die Werte von Headern unterstützen ebenfalls Variablen.</p>
+<h2 id='body'>Body</h2>
+<blockquote>
+<p>Body vom Typ <code>binary</code></p>
+</blockquote>
+<div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">connection</span><span class="pi">:</span>
+  <span class="na">main</span><span class="pi">:</span>
+    <span class="c1"># ...</span>
+    <span class="na">body</span><span class="pi">:</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">binary"</span>
+      <span class="na">input</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{input.abc}}"</span>
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"connection"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"main"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"binary"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"input"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{input.abc}}"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Body vom Typ <code>raw</code></p>
+</blockquote>
+<div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">connection</span><span class="pi">:</span>
+  <span class="na">main</span><span class="pi">:</span>
+    <span class="c1"># ...</span>
+    <span class="na">headers</span><span class="pi">:</span>
+      <span class="na">Content-Type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">application/json"</span>
+    <span class="na">body</span><span class="pi">:</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">raw"</span>
+      <span class="na">input</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">{</span>
+          <span class="s">"a:": "{{input.a}}"</span>
+        <span class="s">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"connection"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"main"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"headers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"Content-Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"application/json"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"raw"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"input"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{</span><span class="se">\n</span><span class="s2">  </span><span class="se">\"</span><span class="s2">a:</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">{{input.a}}</span><span class="se">\"\n</span><span class="s2">}</span><span class="se">\n</span><span class="s2">"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Body vom Typ <code>form-data</code></p>
+</blockquote>
+<div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">connection</span><span class="pi">:</span>
+  <span class="na">main</span><span class="pi">:</span>
+    <span class="c1"># ...</span>
+    <span class="na">body</span><span class="pi">:</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">form-data"</span>
+      <span class="na">input</span><span class="pi">:</span>
+        <span class="na">mainImage</span><span class="pi">:</span>
+          <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">file"</span>
+          <span class="na">value</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{input.image}}"</span>
+          <span class="na">contentType</span><span class="pi">:</span> <span class="s2">"</span><span class="s">auto"</span>
+        <span class="na">testValue</span><span class="pi">:</span>
+          <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">text"</span>
+          <span class="na">value</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{input.checkboxA}}"</span>
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"connection"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"main"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"form-data"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"input"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"mainImage"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"file"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{input.image}}"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"contentType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"auto"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"testValue"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{input.checkboxA}}"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>Um Daten im Body zu speichern existieren drei verschiedene Optionen: <code>form-data</code>, <code>binary</code>, <code>raw</code>.</p>
+
+<ul>
+<li><code>binary</code> wird genutzt um Binärdaten, wie beispielsweise Bilder zu übertragen. Dieser Wert erlaubt nur Variablen als input. Diese müssen zusätzlich in Binärform vorliegen. So kann zum Beispiel <code>input.abc</code> im nebenstehenden Beispiel vom Typ <code>image</code> sein.</li>
+<li><code>raw</code> wird verwendet um reine Textnachrichten zu übermitteln. Hierbei wird empfohlen über die <code>headers</code> Schlüssel noch den Wert <code>Content-Type</code> passend zum übertragenen Datentyp anzupassen</li>
+<li><code>form-data</code> erlaubt die Angabe mehrerer Eingabeelemente, welche sowohl Text als auch Dateien beinhalten können. Jedem Wert muss hierbei einen Namen zugewiesen werden. Zusätzlich muss mittels <code>type</code> angegeben werden ob eine Datei als Input verwendet wird (<code>file</code>) oder es sich um reinen Text handelt (<code>text</code>). <code>file</code> unterstützt zusätzlich den Wert <code>contentType</code> um den Content-Type anzugeben. Die <code>contentType</code> Ermittlung kann mittels des Werts <code>auto</code> dem Browser überlassen werden.</li>
+</ul>
+<h1 id='eingabe'>Eingabe</h1>
+<p>Im Abschnitt <code>input</code> werden alle Eingabeelemente angegeben, welche zum verwenden des Modells notwendig sind. </p>
+
+<p>Mögliche Werte für <code>type</code> sind:</p>
+
+<table><thead>
+<tr>
+<th>Bezeichnung</th>
+<th>Beschreibung</th>
+<th>Beispiel</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>image</code></td>
+<td>Eingabeelement ist ein Bild, welches sowohl als Base64 als auch als Binärwert übergeben werden kann</td>
+<td><img src="images/input/images-b4ad8811.png" alt="image" /></td>
+</tr>
+<tr>
+<td><code>input</code></td>
+<td>Eingabeelement ist ein Freitext-Input. Die Länge, sowie Formatierung kann eingeschränkt werden</td>
+<td><img src="images/input/input-059e363c.png" alt="image" /></td>
+</tr>
+<tr>
+<td><code>slider</code></td>
+<td>Eingabeelement ist ein Slider, welcher in einem gewissen Bereich mit einer festgelegten Schrittweite Zahlenwerte ausgibt</td>
+<td><img src="images/input/slider-832252cd.png" alt="image" /></td>
+</tr>
+<tr>
+<td><code>textarea</code></td>
+<td>Eingabeelement ist eine Textarea, welche längeren Freitext erlaubt. Die Länge, sowie Formatierung kann eingeschränkt werden</td>
+<td><img src="images/input/textarea-90591cc4.png" alt="image" /></td>
+</tr>
+<tr>
+<td><code>select</code></td>
+<td>Eingabeelement ist ein Select, welches ein Element aus einer (Dropdown-)Auswahl an Elementen erlaubt</td>
+<td><img src="images/input/select-d0130555.png" alt="image" /></td>
+</tr>
+<tr>
+<td><code>multiselect</code></td>
+<td>Eingabeelement ist vom Typ Multiselect, welcher mehrere Element aus einer (Dropdown-)Auswahl an Elementen erlaubt</td>
+<td><img src="images/input/multiselect-59f7e00a.png" alt="image" /></td>
+</tr>
+<tr>
+<td><code>checkbox</code></td>
+<td>Eingabeelement ist vom Typ Checkbox, welches mehrere Element aus einer Auflistung von Elementen erlaubt</td>
+<td><img src="images/input/checkbox-a75bc7e9.png" alt="image" /></td>
+</tr>
+<tr>
+<td><code>radio</code></td>
+<td>Eingabeelement ist vom Typ Radio, welches ein Element aus einer Auflistung von Elementen erlaubt</td>
+<td><img src="images/input/radio-e3e8c51f.png" alt="image" /></td>
+</tr>
+</tbody></table>
+<div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">input</span><span class="pi">:</span>
+  <span class="na">imageA</span><span class="pi">:</span>
+    <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Image</span><span class="nv"> </span><span class="s">A"</span>
+    <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">image"</span>
+    <span class="na">values</span><span class="pi">:</span>
+      <span class="c1"># ...</span>
+</code></pre></div>
+<p>Der Aufbau eines Eingabeelements folgt immer dem Schema der Nachfolgenden Tabelle:</p>
+
+<table><thead>
+<tr>
+<th>Schlüssel</th>
+<th>Beschreibung</th>
+<th>Mögliche Werte</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>label</td>
+<td>Menschenlesbare Bezeichnung des Eingabeelements</td>
+<td>Referenzbild, Bild A, Bumpmap</td>
+</tr>
+<tr>
+<td>type</td>
+<td>Typ des Eingabeelements</td>
+<td>siehe <a href="#eingabe">Tabelle</a></td>
+</tr>
+<tr>
+<td>values</td>
+<td>Parameter zur Konfiguration des Eingabeelements</td>
+<td>divers</td>
+</tr>
+</tbody></table>
+<h2 id='image'>Image</h2>
+<blockquote>
+<p>Beispiel für ein Bild-Eingabeelement</p>
+</blockquote>
+<div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">input</span><span class="pi">:</span>
+  <span class="na">imageA</span><span class="pi">:</span>
+    <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Image</span><span class="nv"> </span><span class="s">A"</span>
+    <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">image"</span>
+    <span class="na">values</span><span class="pi">:</span>
+      <span class="na">accepts</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s2">"</span><span class="s">image/jpg"</span>
+        <span class="pi">-</span> <span class="s2">"</span><span class="s">image/png"</span>
+      <span class="na">output</span><span class="pi">:</span> <span class="s2">"</span><span class="s">base64"</span>
+</code></pre></div>
+<p>Um ein Eingabeelement, welches Bild akzeptiert zu erstellen muss als Typ <code>image</code> angegeben werden. Hierbei können verschiedene Einschränkungen angegeben werden, wie in der Nachfolgenden Tabelle gesehen werden kann:</p>
+
+<table><thead>
+<tr>
+<th>Schlüssel</th>
+<th>Beschreibung</th>
+<th>Mögliche Werte</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>accepts</td>
+<td>Liste akzeptierter MIME-Types. Muss <strong>immer</strong> <code>image/jpg</code> beinhalten</td>
+<td><code>image/jpg</code>, <code>image/png</code>, ...</td>
+</tr>
+<tr>
+<td>value</td>
+<td>Übergabewert der Datei</td>
+<td><code>binary</code>, <code>base64</code></td>
+</tr>
+</tbody></table>
+<h2 id='input-textarea'>Input, Textarea</h2><h1 id='variablen'>Variablen</h1>
+<!-- TODO: {{user.AGENT}}, {{input.inputA}}, {{cmd.json()}} ... -->
+<h1 id='errors'>Errors</h1>
 <aside class="notice">
 This error section is stored in a separate file in <code>includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files...just save them to the <code>includes</code> folder and add them to the top of your <code>index.md</code>'s frontmatter. Files are included in the order listed.
 </aside>
