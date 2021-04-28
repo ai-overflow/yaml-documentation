@@ -1056,7 +1056,74 @@ Hierbei werden drei Verbindungen mit den Namen <code>main</code>, <code>imageCon
 <li><code>[&quot;Test A&quot;, &quot;Test B&quot;]</code></li>
 </ul></li>
 </ul>
-<h1 id='variablen'>Variablen</h1>
+<h1 id='variablen'>Variablen</h1><div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">connection</span><span class="pi">:</span>
+  <span class="na">main</span><span class="pi">:</span>
+    <span class="na">path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">/inputA/{{input.checkboxA}}/"</span>
+<span class="na">input</span><span class="pi">:</span>
+  <span class="na">checkboxA</span><span class="pi">:</span>
+    <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">multiselect"</span>
+    <span class="na">values</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">Dude</span><span class="nv"> </span><span class="s">A"</span>
+</code></pre></div>
+<p>Variablen können mittels <code>{{NAME}}</code> verwendet werden. Hierbei wird zuerst der Namensraum mittels <code>{{NS.NAME}}</code> angegeben. Mögliche Werte sind hierbei <code>input</code>, <code>vars</code>, <code>user</code> und <code>cmd</code> sein.</p>
+
+<ul>
+<li><p><code>input</code> referenziert Werte aus <code>input</code>. Der Name wird anhand des Schlüssels von Input gewählt Hierbei wird der Rückgabewert des jeweiligen Typs als durch den Namen der Variable ersetzt. Zum Beispiel wird <code>/input/{{input.inputA}}</code> zu <code>/input/DudeA</code>, wenn der <code>inputA</code> den Rückgabewert <code>Dude</code> erhält.</p></li>
+<li><p><code>vars</code> können Werte sein, welche aus einem Output erhalten wurden und zwischengespeichert werden.</p></li>
+<li><p><code>user</code> sind Informationen über einen Benutzer. Hierbei sind die folgenden Werte unterstützt:</p></li>
+</ul>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Beschreibung</th>
+<th>Beispiel</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>user.AGENT</td>
+<td>User Agent</td>
+<td>5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36</td>
+</tr>
+<tr>
+<td>user.Cookie.Name</td>
+<td>Gibt Cookie des Benutzers zurück</td>
+<td>test123</td>
+</tr>
+<tr>
+<td>user.language</td>
+<td>Browsersprache des Benutzers</td>
+<td>en-US</td>
+</tr>
+</tbody></table>
+
+<ul>
+<li><code>cmd</code> sind spezielle Funktionen, welche z.B. verwendet werden können um JSON Werte auszulesen.</li>
+</ul>
+<div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">rnd</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">test </span><span class="m">1</span>
+  <span class="pi">-</span> <span class="s">test </span><span class="m">2</span>
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"rnd"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"test 1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"test 2"</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Beschreibung</th>
+<th>Beispiel</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>cmd.json()</td>
+<td>Liest einen Wert aus einer JSON/YAML aus</td>
+<td>cmd.json(root/rnd[0]) -&gt; test 1</td>
+</tr>
+</tbody></table>
+
 <!-- TODO: {{user.AGENT}}, {{input.inputA}}, {{cmd.json()}} ... -->
 <h1 id='errors'>Errors</h1>
 <aside class="notice">
