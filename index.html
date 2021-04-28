@@ -361,6 +361,15 @@
                   <li>
                     <a href="#input-textarea" class="toc-h2 toc-link" data-title="Input, Textarea">Input, Textarea</a>
                   </li>
+                  <li>
+                    <a href="#slider" class="toc-h2 toc-link" data-title="Slider">Slider</a>
+                  </li>
+                  <li>
+                    <a href="#select-radio" class="toc-h2 toc-link" data-title="Select, Radio">Select, Radio</a>
+                  </li>
+                  <li>
+                    <a href="#multiselect-checkbox" class="toc-h2 toc-link" data-title="Multiselect, Checkbox">Multiselect, Checkbox</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -558,7 +567,7 @@ Wenn Sie JSON zur Beschreibung ihres Projekts verwenden, müssen Sie die Datei <
 <h3 id='authors'>Authors</h3><div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">authors</span><span class="pi">:</span>
   <span class="pi">-</span> <span class="s2">"</span><span class="s">John</span><span class="nv"> </span><span class="s">Doe"</span>
   <span class="pi">-</span> <span class="s2">"</span><span class="s">Max</span><span class="nv"> </span><span class="s">Mustermann"</span>
-  <span class="pi">-</span> <span class="s2">"</span><span class="s">Erika</span><span class="nv"> </span><span class="s">Mustermann,</span><span class="nv"> </span><span class="s">M.</span><span class="nv"> </span><span class="s">Sc."</span>
+  <span class="pi">-</span> <span class="s2">"</span><span class="s">Erika</span><span class="nv"> </span><span class="s">Musterfrau,</span><span class="nv"> </span><span class="s">M.</span><span class="nv"> </span><span class="s">Sc."</span>
 </code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"authors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="s2">"John Doe"</span><span class="p">,</span><span class="w">
@@ -861,20 +870,193 @@ Hierbei werden drei Verbindungen mit den Namen <code>main</code>, <code>imageCon
 <th>Schlüssel</th>
 <th>Beschreibung</th>
 <th>Mögliche Werte</th>
+<th>Pflicht</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>accepts</td>
 <td>Liste akzeptierter MIME-Types. Muss <strong>immer</strong> <code>image/jpg</code> beinhalten</td>
 <td><code>image/jpg</code>, <code>image/png</code>, ...</td>
+<td>❌</td>
 </tr>
 <tr>
-<td>value</td>
+<td>output</td>
 <td>Übergabewert der Datei</td>
 <td><code>binary</code>, <code>base64</code></td>
+<td>✔️</td>
 </tr>
 </tbody></table>
-<h2 id='input-textarea'>Input, Textarea</h2><h1 id='variablen'>Variablen</h1>
+<h3 id='ruckgabewert'>Rückgabewert</h3>
+<p>Wenn <code>output</code> als <code>base64</code> definiert ist:</p>
+
+<ul>
+<li><code>data:image/jpeg;base64,/9j/4AAQSkZJRgABAQA...</code></li>
+</ul>
+
+<p>Wenn <code>output</code> als <code>binary</code> definiert ist:</p>
+
+<ul>
+<li>[binary blob]</li>
+</ul>
+<h2 id='input-textarea'>Input, Textarea</h2><div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">input</span><span class="pi">:</span>
+  <span class="na">inputA</span><span class="pi">:</span>
+    <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Name"</span>
+    <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">input"</span>
+    <span class="na">values</span><span class="pi">:</span>
+      <span class="na">regex</span><span class="pi">:</span> <span class="s2">"</span><span class="s">[A-Za-z0-9]+"</span>
+      <span class="na">length</span><span class="pi">:</span>
+        <span class="na">min</span><span class="pi">:</span> <span class="m">100</span>
+        <span class="na">max</span><span class="pi">:</span> <span class="m">5000</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>Schlüssel</th>
+<th>Beschreibung</th>
+<th>Mögliche Werte</th>
+<th>Pflicht</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>regex</td>
+<td>Regex zur Beschreibung möglicher Werte</td>
+<td><code>[A-Z]+</code>, <code>\s?(.*?)</code></td>
+<td>❌</td>
+</tr>
+<tr>
+<td>length</td>
+<td>Länge der Eingabe. Wird mittels max und min spezifiziert</td>
+<td><code>min: 10</code> <br />  <code>max: 20</code></td>
+<td>❌</td>
+</tr>
+</tbody></table>
+<h3 id='ruckgabewert-2'>Rückgabewert</h3>
+<ul>
+<li>UTF-8 Text</li>
+<li><strong>Beispiele:</strong>
+
+<ul>
+<li><code>Test ABC</code></li>
+<li><code>John Doe</code></li>
+<li><code>😎😎</code></li>
+</ul></li>
+</ul>
+<h2 id='slider'>Slider</h2><div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">input</span><span class="pi">:</span>
+  <span class="na">sliderA</span><span class="pi">:</span>
+    <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Bias"</span>
+    <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">slider"</span>
+    <span class="na">values</span><span class="pi">:</span>
+      <span class="na">min</span><span class="pi">:</span> <span class="m">0</span>
+      <span class="na">max</span><span class="pi">:</span> <span class="m">100</span>
+      <span class="na">stepSize</span><span class="pi">:</span> <span class="m">0.1</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>Schlüssel</th>
+<th>Beschreibung</th>
+<th>Mögliche Werte</th>
+<th>Pflicht</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>min</td>
+<td>Minimalwert, muss kleiner als <code>max</code> sein</td>
+<td><code>10</code>, <code>0.01</code>, <code>-20</code></td>
+<td>❌</td>
+</tr>
+<tr>
+<td>max</td>
+<td>Maximalwert, muss größer <code>min</code> sein</td>
+<td><code>10000</code>, <code>1</code>, <code>0.5</code></td>
+<td>❌</td>
+</tr>
+<tr>
+<td>stepSize</td>
+<td>Schrittgröße, muss größer 0 sein</td>
+<td><code>1</code>, <code>100</code>, <code>0.0001</code></td>
+<td>❌</td>
+</tr>
+</tbody></table>
+<h3 id='ruckgabewert-3'>Rückgabewert</h3>
+<ul>
+<li><code>numeric</code> im definierten Zahlenraum. Wenn stepSize &lt; 1 ist, so ist der Rückgabewert ein <code>float</code></li>
+<li><strong>Beispiele:</strong>
+
+<ul>
+<li><code>0.01</code></li>
+<li><code>100</code></li>
+<li><code>-204.2</code></li>
+</ul></li>
+</ul>
+<h2 id='select-radio'>Select, Radio</h2><div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">input</span><span class="pi">:</span>
+  <span class="na">checkboxA</span><span class="pi">:</span>
+    <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Creator"</span>
+    <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">checkbox"</span>
+    <span class="na">values</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">Dude</span><span class="nv"> </span><span class="s">A"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">Dude</span><span class="nv"> </span><span class="s">B"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">Dude</span><span class="nv"> </span><span class="s">C"</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>Schlüssel</th>
+<th>Beschreibung</th>
+<th>Mögliche Werte</th>
+<th>Pflicht</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>-</td>
+<td>Liste an Auswählbaren Elementen</td>
+<td>- <code>Test A</code><br />- <code>Test B</code></td>
+<td>✔️</td>
+</tr>
+</tbody></table>
+<h3 id='ruckgabewert-4'>Rückgabewert</h3>
+<ul>
+<li>Element von <code>values</code></li>
+<li><strong>Beispiele:</strong>
+
+<ul>
+<li><code>Test A</code></li>
+<li><code>Test B</code></li>
+</ul></li>
+</ul>
+<h2 id='multiselect-checkbox'>Multiselect, Checkbox</h2><div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">input</span><span class="pi">:</span>
+  <span class="na">checkboxA</span><span class="pi">:</span>
+    <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Creator"</span>
+    <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">multiselect"</span>
+    <span class="na">values</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">Dude</span><span class="nv"> </span><span class="s">A"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">Dude</span><span class="nv"> </span><span class="s">B"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">Dude</span><span class="nv"> </span><span class="s">C"</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>Schlüssel</th>
+<th>Beschreibung</th>
+<th>Mögliche Werte</th>
+<th>Pflicht</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>-</td>
+<td>Liste an Auswählbaren Elementen</td>
+<td>- <code>Test A</code><br />- <code>Test B</code></td>
+<td>✔️</td>
+</tr>
+</tbody></table>
+<h3 id='ruckgabewert-5'>Rückgabewert</h3>
+<ul>
+<li>Mehrere Elemente von <code>values</code></li>
+<li>Wird als JSON Array formatiert</li>
+<li><strong>Beispiele:</strong>
+
+<ul>
+<li><code>[&quot;Test A&quot;]</code></li>
+<li><code>[&quot;Test A&quot;, &quot;Test B&quot;]</code></li>
+</ul></li>
+</ul>
+<h1 id='variablen'>Variablen</h1>
 <!-- TODO: {{user.AGENT}}, {{input.inputA}}, {{cmd.json()}} ... -->
 <h1 id='errors'>Errors</h1>
 <aside class="notice">
