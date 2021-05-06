@@ -32,7 +32,7 @@ src                   Ordner  Ihre Projektdaten
 .gitignore            Datei   [optional] .gitignore
 config.dl.yaml        Datei   Beschreibungsdatei ihres Projekts
 docker-compose.yml    Datei   docker-compose, welche ihr Projekt startet
-Dockerfile            Datei   [optional] Dockerfile
+Dockerfile            Datei   Dockerfile
 LICENSE               Datei   [optional] Lizenz ihres Projekts
 README.md             Datei   Projektbeschreibung
 ```
@@ -41,24 +41,13 @@ Wenn Sie ihr Projekt erstellen muss dieses der Vorgegebenen Ordnerstruktur entsp
 
 Optionale Elemente müssen bei der Abgabe nicht in ihrem Projekt vorhanden sein, sind aber "nice to have".
 Weitere Elemente, welche nicht von "optional" abgedeckt sind, können ebenfalls in ihrem Hauptverzeichnis vorhanden sein.
-Alle Elemente, welche im gezeigten Beispiel nicht mit "optional" gekennzeichnet sind, müssen vorhanden sein
+Alle Elemente, welche im gezeigten Beispiel nicht mit "optional" gekennzeichnet sind, müssen vorhanden sein.
+
+Bitte beachten Sie vor allem, dass wenn Sie eine Lizenz angeben, diese auch vereinbar ist mit der Lizenz von eventuellen ursprünglichen Werken.
+Dies bedeutet, sofern ihr Werk auf der Arbeit eines anderen Projektes aufbaut und dieses Projekt beispielsweise unter der GPL-Lizenz steht, so muss
+ihr Werk ebenfalls unter einer der GPL kompatiblen Lizenz stehen.
 
 # Einstieg
-
-> /src/app/views.py
-
-```python
-from app import app
-import json
-
-
-@app.route('/image/test/<seed>/', methods=['GET'])
-def algo_test(seed):
-  random.seed(seed)
-  text = "Seed: {seed:}\n".format(seed = seed)
-  results = [random.random() for i in range(10)]
-  return json.dumps({"text": text, "rnd": results})
-```
 
 > config:
 
@@ -83,7 +72,7 @@ output:
     type: html
     label: "First Random Number"
     format:
-      labelValue: "root/rnd[0]"
+      labelValue: "{{cmd.json(root/rnd[0])}}"
 ```
 
 ```json
@@ -120,9 +109,10 @@ output:
 }
 ```
 
-Zum starten müssen sie die Datei `config.dl.yaml` in ihrem Hauptverzeichnis anlegen. Ersetzen Sie den Namen ihres Projektes durch einen aussagekräftigen, menschenlesbaren Titel zur Beschreibung ihres Projektes an.
-Anschließend müssen Sie die Verbindung, welche verwendet werden soll um ihrem Projekt Daten zu übergeben zu spezifizieren. Nähere Informationen hierzu finden Sie im Abschnitt [Verbindung](#verbindung).
-Am Anfang können Sie den Port, Pfad, sowie die HTTP-Methode auswählen. Wenn Sie gerne einen Input referenzieren wollen, so verwenden Sie hierzu die Syntax `{{input.NAME}}`. Näheres hierzu finden Sie im Abschnitt [Variablen](#variablen).
+
+Zum Starten müssen sie die Datei `config.dl.yaml` in ihrem Hauptverzeichnis anlegen. Ersetzen Sie den Namen ihres Projektes durch einen aussagekräftigen, menschenlesbaren Titel zur Beschreibung ihres Projektes.
+Anschließend müssen Sie die Verbindung, welche verwendet werden soll um ihrem Projekt Daten zu übergeben spezifizieren (Abschnitt `connection:`). Nähere Informationen hierzu finden Sie im Abschnitt [Verbindung](#verbindung).
+Am Anfang genügt es den Port, Pfad, sowie die HTTP-Methode auswählen. Wenn Sie gerne einen Input referenzieren wollen, so verwenden Sie hierzu die Syntax `{{input.NAME}}`. Näheres hierzu finden Sie im Abschnitt [Variablen](#variablen).
 
 In diesem Beispiel wird als Input ein Slider verwendet, welcher die Werte 0-1 mit der Schrittweite 0.01 akzeptiert. Das Label wird "Seed" sein.
 
@@ -131,6 +121,25 @@ Die Ausgabe wird der erste Eintrag des Rückgabewertes von "rnd" sein. Näheres 
 <aside class="notice">
 Wenn Sie JSON zur Beschreibung ihres Projekts verwenden, müssen Sie die Datei <code>config.dl.json</code> nennen
 </aside>
+
+> /src/app/views.py
+
+```python
+import json
+from flask import Flask
+app = Flask(__name__)
+
+
+@app.route('/image/test/<seed>/', methods=['GET'])
+def algo_test(seed):
+  random.seed(seed)
+  text = "Seed: {seed:}\n".format(seed = seed)
+  results = [random.random() for i in range(10)]
+  return json.dumps({"text": text, "rnd": results})
+```
+
+Sofern Sie noch kein REST fähiges Projekt haben (wie dies beispielsweise bei einem Jupyter Notebook der Fall ist), müssen Sie ihr Projekt noch anpassen. Wenn Sie ein Python Projekt haben können Sie hierzu [Flask](https://flask.palletsprojects.com/en/1.1.x/) verwenden.
+Im nebenstehenden Beispiel können Sie sehen wie die Hauptdatei eines solchen Projekts aussehen kann. Bitte beachten Sie das der Rückgabewert ihrer Anwendung entweder im JSON Format oder als Bild vorliegen muss. Näheres finden Sie unter [Ausgabe](#ausgabe).
 
 # Struktur
 
@@ -164,15 +173,21 @@ output: ...
 
 Der Entry Point beschreibt den ersten Request, welcher zum verschicken der Inputs verwendet werden soll. Dieser Request wird immer nach dem abschicken der Eingabe durchgeführt.
 
+Wenn zum Beispiel im Abschnitt `connection` eine Verbindung mit dem Namen `Test` existiert. So kann als `entryPoint: Test` angegeben werden. 
+
+<aside class="notice">
+Sie können als entryPoint nur Namen angeben, welche im Abschnitt <code>connection</code> existieren. Sie können <strong>keine</strong> Elemente anderer Abschnitte referenzieren!
+</aside>
+
 ### Name
 
 Der Name ist ein für Menschen lesbarer Titel des Projekts. Folgende Liste zeigt einige gute und schlechte Beispiele für einen Titel auf:
 
 | Ok  | Name                                | Erklärung                                                                                                                      |
 | --- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| ❌   | StudPro-2020WS-T01                  | Bitte nicht die Teambezeichnung als Name wählen                                                                                |
+| ❌   | StudPro-2020WS-T01-Objekterkennung  | Bitte nicht die Teambezeichnung als Name wählen                                                                                |
 | ❌   | CNN/RNN Objekterkennung Zun et. al. | Bitte keine Erklärung zum zugrundeliegenden Algorithmus oder Autor verwenden. Verwenden Sie hierzu "author" oder "description" |
-| ❌   | Obj                                 | Funktionsweise nicht eindeutig                                                                                                 |
+| ❌   | Obj                                 | Funktionsweise nicht erkennbar                                                                                                 |
 | ✔️   | Objekterkennung                     |                                                                                                                                |
 
 ### Description
@@ -196,9 +211,9 @@ description: |
 
 Die Beschreibung kann alle Informationen beinhalten, welche nicht direkt im Titel enthalten sind, so können unter anderem genaue Algorithmen, Funktionsweise, Zitate und ähnliches verwendet werden. Die Beschreibung unterstützt zudem Markdown zur Formatierung.
 
-Sofern Sie bereits eine ausführliche README haben, muss die Description nicht sehr ausführlich sein, sondern es genügt ein Verweis auf die README.
+Sofern Sie bereits eine ausführliche README haben, muss die Description nicht sehr ausführlich sein, sondern es genügt ein Verweis auf die README. Verwenden Sie hierzu die Schreibweise `description: {{include.README.md}}`.
 
-<aside class="warning">Binden Sie bitte keine externen Bilder, große Tabellen oder ähnliche größere Elemente, welche die Formatierung zerstören können ein. Versuchen Sie, wenn möglich nur wichtige Inhalte hervorzuheben, sofern Sie Markdown verwenden.</aside>
+<aside class="warning">Binden Sie bitte keine externen Bilder, große Tabellen oder ähnliche größere Elemente, welche die Formatierung zerstören können ein. Versuchen Sie, wenn möglich nur wichtige Inhalte hervorzuheben, sofern Sie Markdown Befehle verwenden.</aside>
 
 ### Authors
 
@@ -219,9 +234,9 @@ authors:
 }
 ```
 
-In "Authors" können die Autoren des Projekts genannt werden. Hierbei sollten nur die Namen der beteiligten Studenten verwendet werden. Für die Nennung von Teilnehmer Zugrundeliegender Paper verwenden Sie bitte die Beschreibung (`description`).
+In "Authors" können die Autoren des Projekts genannt werden. Hierbei sollten nur die Namen der beteiligten Studenten verwendet werden. Für die Nennung von Teilnehmer zugrundeliegender Paper verwenden Sie bitte die Beschreibung (`description`).
 
-Die Autoren sind eine Liste von Strings, womit es möglich ist auch mehrere Teilnehmer inkl. Titel anzugeben.
+Die Autoren sind eine Liste von Strings, womit es möglich ist auch mehrere Teilnehmer inkl. Titel/akademische Grade/... (sofern gewünscht) anzugeben.
 
 # Verbindung
 
@@ -282,7 +297,7 @@ Port, Path und Method sind die minimalen Angaben für eine funktionsfähige Verb
 
 - **Method** unterstützt folgende Werte: `GET`,`PUT`,`PATCH`,`POST`,`DELETE`,`HEAD`,`COPY`,`OPTIONS`,`LINK`,`UNLINK`,`PURGE`,`LOCK`,`UNLOCK`,`PROPFIND`,`VIEW`
 - **Port** unterstützt Zahlenwerte von 1024-65535. Dieser Wert kann frei gewählt werden.
-- **Path** kann ein beliebiger Pfad ohne Parameter (/abc/**?a=b**) sein. Dieser muss mit einem `/` beginnen und enden. Dieser Wert unterstützt Variablen
+- **Path** kann ein beliebiger Pfad ohne Parameter (/abc/~~**?a=b**~~) sein. Dieser muss mit einem `/` beginnen und enden. Dieser Wert unterstützt Variablen
 
 ## Parameter
 
@@ -611,6 +626,10 @@ input:
   - `["Test A"]`
   - `["Test A", "Test B"]`
 
+# Ausgabe
+
+`WIP!`
+
 # Variablen
 
 ```yaml
@@ -658,5 +677,7 @@ rnd:
 | Name             | Beschreibung                             | Beispiel                                                                                                   |
 |------------------|------------------------------------------|------------------------------------------------------------------------------------------------------------|
 | cmd.json()       | Liest einen Wert aus einer JSON/YAML aus | cmd.json(root/rnd[0]) -> test 1                                                                            |
+
+- `include` wird verwendet um den Inhalt einer Projektdatei einzufügen. So kann z.B. der Inhalt der README mittels `{{include.README.md}}` geladen werden. Die Syntax ist allgemein `{{include.FILE_NAME}}`
 
 <!-- TODO: {{user.AGENT}}, {{input.inputA}}, {{cmd.json()}} ... -->
