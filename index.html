@@ -373,6 +373,9 @@
               </ul>
           </li>
           <li>
+            <a href="#ausgabe" class="toc-h1 toc-link" data-title="Ausgabe">Ausgabe</a>
+          </li>
+          <li>
             <a href="#variablen" class="toc-h1 toc-link" data-title="Variablen">Variablen</a>
           </li>
           <li>
@@ -399,7 +402,7 @@ src                   Ordner  Ihre Projektdaten
 .gitignore            Datei   [optional] .gitignore
 config.dl.yaml        Datei   Beschreibungsdatei ihres Projekts
 docker-compose.yml    Datei   docker-compose, welche ihr Projekt startet
-Dockerfile            Datei   [optional] Dockerfile
+Dockerfile            Datei   Dockerfile
 LICENSE               Datei   [optional] Lizenz ihres Projekts
 README.md             Datei   Projektbeschreibung
 </code></pre></div>
@@ -407,22 +410,12 @@ README.md             Datei   Projektbeschreibung
 
 <p>Optionale Elemente müssen bei der Abgabe nicht in ihrem Projekt vorhanden sein, sind aber &quot;nice to have&quot;.
 Weitere Elemente, welche nicht von &quot;optional&quot; abgedeckt sind, können ebenfalls in ihrem Hauptverzeichnis vorhanden sein.
-Alle Elemente, welche im gezeigten Beispiel nicht mit &quot;optional&quot; gekennzeichnet sind, müssen vorhanden sein</p>
+Alle Elemente, welche im gezeigten Beispiel nicht mit &quot;optional&quot; gekennzeichnet sind, müssen vorhanden sein.</p>
+
+<p>Bitte beachten Sie vor allem, dass wenn Sie eine Lizenz angeben, diese auch vereinbar ist mit der Lizenz von eventuellen ursprünglichen Werken.
+Dies bedeutet, sofern ihr Werk auf der Arbeit eines anderen Projektes aufbaut und dieses Projekt beispielsweise unter der GPL-Lizenz steht, so muss
+ihr Werk ebenfalls unter einer der GPL kompatiblen Lizenz stehen.</p>
 <h1 id='einstieg'>Einstieg</h1>
-<blockquote>
-<p>/src/app/views.py</p>
-</blockquote>
-<div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">from</span> <span class="nn">app</span> <span class="kn">import</span> <span class="n">app</span>
-<span class="kn">import</span> <span class="nn">json</span>
-
-
-<span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/image/test/&lt;seed&gt;/'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">'GET'</span><span class="p">])</span>
-<span class="k">def</span> <span class="nf">algo_test</span><span class="p">(</span><span class="n">seed</span><span class="p">):</span>
-  <span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-  <span class="n">text</span> <span class="o">=</span> <span class="s">"Seed: {seed:}</span><span class="se">\n</span><span class="s">"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
-  <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="n">random</span><span class="p">.</span><span class="n">random</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
-  <span class="k">return</span> <span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">({</span><span class="s">"text"</span><span class="p">:</span> <span class="n">text</span><span class="p">,</span> <span class="s">"rnd"</span><span class="p">:</span> <span class="n">results</span><span class="p">})</span>
-</code></pre></div>
 <blockquote>
 <p>config:</p>
 </blockquote>
@@ -446,7 +439,7 @@ Alle Elemente, welche im gezeigten Beispiel nicht mit &quot;optional&quot; geken
     <span class="na">type</span><span class="pi">:</span> <span class="s">html</span>
     <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">First</span><span class="nv"> </span><span class="s">Random</span><span class="nv"> </span><span class="s">Number"</span>
     <span class="na">format</span><span class="pi">:</span>
-      <span class="na">labelValue</span><span class="pi">:</span> <span class="s2">"</span><span class="s">root/rnd[0]"</span>
+      <span class="na">labelValue</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{cmd.json(root/rnd[0])}}"</span>
 </code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"entryPoint"</span><span class="p">:</span><span class="w"> </span><span class="s2">"main"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Example Project"</span><span class="p">,</span><span class="w">
@@ -479,9 +472,9 @@ Alle Elemente, welche im gezeigten Beispiel nicht mit &quot;optional&quot; geken
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<p>Zum starten müssen sie die Datei <code>config.dl.yaml</code> in ihrem Hauptverzeichnis anlegen. Ersetzen Sie den Namen ihres Projektes durch einen aussagekräftigen, menschenlesbaren Titel zur Beschreibung ihres Projektes an.
-Anschließend müssen Sie die Verbindung, welche verwendet werden soll um ihrem Projekt Daten zu übergeben zu spezifizieren. Nähere Informationen hierzu finden Sie im Abschnitt <a href="#verbindung">Verbindung</a>.
-Am Anfang können Sie den Port, Pfad, sowie die HTTP-Methode auswählen. Wenn Sie gerne einen Input referenzieren wollen, so verwenden Sie hierzu die Syntax <code>{{input.NAME}}</code>. Näheres hierzu finden Sie im Abschnitt <a href="#variablen">Variablen</a>.</p>
+<p>Zum Starten müssen sie die Datei <code>config.dl.yaml</code> in ihrem Hauptverzeichnis anlegen. Ersetzen Sie den Namen ihres Projektes durch einen aussagekräftigen, menschenlesbaren Titel zur Beschreibung ihres Projektes.
+Anschließend müssen Sie die Verbindung, welche verwendet werden soll um ihrem Projekt Daten zu übergeben spezifizieren (Abschnitt <code>connection:</code>). Nähere Informationen hierzu finden Sie im Abschnitt <a href="#verbindung">Verbindung</a>.
+Am Anfang genügt es den Port, Pfad, sowie die HTTP-Methode auswählen. Wenn Sie gerne einen Input referenzieren wollen, so verwenden Sie hierzu die Syntax <code>{{input.NAME}}</code>. Näheres hierzu finden Sie im Abschnitt <a href="#variablen">Variablen</a>.</p>
 
 <p>In diesem Beispiel wird als Input ein Slider verwendet, welcher die Werte 0-1 mit der Schrittweite 0.01 akzeptiert. Das Label wird &quot;Seed&quot; sein.</p>
 
@@ -490,6 +483,24 @@ Am Anfang können Sie den Port, Pfad, sowie die HTTP-Methode auswählen. Wenn Si
 <aside class="notice">
 Wenn Sie JSON zur Beschreibung ihres Projekts verwenden, müssen Sie die Datei <code>config.dl.json</code> nennen
 </aside>
+
+<blockquote>
+<p>/src/app/views.py</p>
+</blockquote>
+<div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/image/test/&lt;seed&gt;/'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">'GET'</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">algo_test</span><span class="p">(</span><span class="n">seed</span><span class="p">):</span>
+  <span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+  <span class="n">text</span> <span class="o">=</span> <span class="s">"Seed: {seed:}</span><span class="se">\n</span><span class="s">"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
+  <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="n">random</span><span class="p">.</span><span class="n">random</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+  <span class="k">return</span> <span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">({</span><span class="s">"text"</span><span class="p">:</span> <span class="n">text</span><span class="p">,</span> <span class="s">"rnd"</span><span class="p">:</span> <span class="n">results</span><span class="p">})</span>
+</code></pre></div>
+<p>Sofern Sie noch kein REST fähiges Projekt haben (wie dies beispielsweise bei einem Jupyter Notebook der Fall ist), müssen Sie ihr Projekt noch anpassen. Wenn Sie ein Python Projekt haben können Sie hierzu <a href="https://flask.palletsprojects.com/en/1.1.x/">Flask</a> verwenden.
+Im nebenstehenden Beispiel können Sie sehen wie die Hauptdatei eines solchen Projekts aussehen kann. Bitte beachten Sie das der Rückgabewert ihrer Anwendung entweder im JSON Format oder als Bild vorliegen muss. Näheres finden Sie unter <a href="#ausgabe">Ausgabe</a>.</p>
 <h1 id='struktur'>Struktur</h1>
 <blockquote>
 <p>Die oberste Ebene der Konfigurationsdatei besteht immer aus den folgenden Schlüsseln:</p>
@@ -515,6 +526,12 @@ Wenn Sie JSON zur Beschreibung ihres Projekts verwenden, müssen Sie die Datei <
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h3 id='entrypoint'>entryPoint</h3>
 <p>Der Entry Point beschreibt den ersten Request, welcher zum verschicken der Inputs verwendet werden soll. Dieser Request wird immer nach dem abschicken der Eingabe durchgeführt.</p>
+
+<p>Wenn zum Beispiel im Abschnitt <code>connection</code> eine Verbindung mit dem Namen <code>Test</code> existiert. So kann als <code>entryPoint: Test</code> angegeben werden. </p>
+
+<aside class="notice">
+Sie können als entryPoint nur Namen angeben, welche im Abschnitt <code>connection</code> existieren. Sie können <strong>keine</strong> Elemente anderer Abschnitte referenzieren!
+</aside>
 <h3 id='name'>Name</h3>
 <p>Der Name ist ein für Menschen lesbarer Titel des Projekts. Folgende Liste zeigt einige gute und schlechte Beispiele für einen Titel auf:</p>
 
@@ -527,7 +544,7 @@ Wenn Sie JSON zur Beschreibung ihres Projekts verwenden, müssen Sie die Datei <
 </thead><tbody>
 <tr>
 <td>❌</td>
-<td>StudPro-2020WS-T01</td>
+<td>StudPro-2020WS-T01-Objekterkennung</td>
 <td>Bitte nicht die Teambezeichnung als Name wählen</td>
 </tr>
 <tr>
@@ -538,7 +555,7 @@ Wenn Sie JSON zur Beschreibung ihres Projekts verwenden, müssen Sie die Datei <
 <tr>
 <td>❌</td>
 <td>Obj</td>
-<td>Funktionsweise nicht eindeutig</td>
+<td>Funktionsweise nicht erkennbar</td>
 </tr>
 <tr>
 <td>✔️</td>
@@ -561,9 +578,9 @@ Wenn Sie JSON zur Beschreibung ihres Projekts verwenden, müssen Sie die Datei <
 </span></code></pre></div>
 <p>Die Beschreibung kann alle Informationen beinhalten, welche nicht direkt im Titel enthalten sind, so können unter anderem genaue Algorithmen, Funktionsweise, Zitate und ähnliches verwendet werden. Die Beschreibung unterstützt zudem Markdown zur Formatierung.</p>
 
-<p>Sofern Sie bereits eine ausführliche README haben, muss die Description nicht sehr ausführlich sein, sondern es genügt ein Verweis auf die README.</p>
+<p>Sofern Sie bereits eine ausführliche README haben, muss die Description nicht sehr ausführlich sein, sondern es genügt ein Verweis auf die README. Verwenden Sie hierzu die Schreibweise <code>description: {{include.README.md}}</code>.</p>
 
-<aside class="warning">Binden Sie bitte keine externen Bilder, große Tabellen oder ähnliche größere Elemente, welche die Formatierung zerstören können ein. Versuchen Sie, wenn möglich nur wichtige Inhalte hervorzuheben, sofern Sie Markdown verwenden.</aside>
+<aside class="warning">Binden Sie bitte keine externen Bilder, große Tabellen oder ähnliche größere Elemente, welche die Formatierung zerstören können ein. Versuchen Sie, wenn möglich nur wichtige Inhalte hervorzuheben, sofern Sie Markdown Befehle verwenden.</aside>
 <h3 id='authors'>Authors</h3><div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">authors</span><span class="pi">:</span>
   <span class="pi">-</span> <span class="s2">"</span><span class="s">John</span><span class="nv"> </span><span class="s">Doe"</span>
   <span class="pi">-</span> <span class="s2">"</span><span class="s">Max</span><span class="nv"> </span><span class="s">Mustermann"</span>
@@ -576,9 +593,9 @@ Wenn Sie JSON zur Beschreibung ihres Projekts verwenden, müssen Sie die Datei <
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<p>In &quot;Authors&quot; können die Autoren des Projekts genannt werden. Hierbei sollten nur die Namen der beteiligten Studenten verwendet werden. Für die Nennung von Teilnehmer Zugrundeliegender Paper verwenden Sie bitte die Beschreibung (<code>description</code>).</p>
+<p>In &quot;Authors&quot; können die Autoren des Projekts genannt werden. Hierbei sollten nur die Namen der beteiligten Studenten verwendet werden. Für die Nennung von Teilnehmer zugrundeliegender Paper verwenden Sie bitte die Beschreibung (<code>description</code>).</p>
 
-<p>Die Autoren sind eine Liste von Strings, womit es möglich ist auch mehrere Teilnehmer inkl. Titel anzugeben.</p>
+<p>Die Autoren sind eine Liste von Strings, womit es möglich ist auch mehrere Teilnehmer inkl. Titel/akademische Grade/... (sofern gewünscht) anzugeben.</p>
 <h1 id='verbindung'>Verbindung</h1><div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">connection</span><span class="pi">:</span>
   <span class="na">main</span><span class="pi">:</span>
     <span class="s">...</span>
@@ -625,7 +642,7 @@ Hierbei werden drei Verbindungen mit den Namen <code>main</code>, <code>imageCon
 <ul>
 <li><strong>Method</strong> unterstützt folgende Werte: <code>GET</code>,<code>PUT</code>,<code>PATCH</code>,<code>POST</code>,<code>DELETE</code>,<code>HEAD</code>,<code>COPY</code>,<code>OPTIONS</code>,<code>LINK</code>,<code>UNLINK</code>,<code>PURGE</code>,<code>LOCK</code>,<code>UNLOCK</code>,<code>PROPFIND</code>,<code>VIEW</code></li>
 <li><strong>Port</strong> unterstützt Zahlenwerte von 1024-65535. Dieser Wert kann frei gewählt werden.</li>
-<li><strong>Path</strong> kann ein beliebiger Pfad ohne Parameter (/abc/<strong>?a=b</strong>) sein. Dieser muss mit einem <code>/</code> beginnen und enden. Dieser Wert unterstützt Variablen</li>
+<li><strong>Path</strong> kann ein beliebiger Pfad ohne Parameter (/abc/<del><strong>?a=b</strong></del>) sein. Dieser muss mit einem <code>/</code> beginnen und enden. Dieser Wert unterstützt Variablen</li>
 </ul>
 <h2 id='parameter'>Parameter</h2>
 <blockquote>
@@ -1056,6 +1073,8 @@ Hierbei werden drei Verbindungen mit den Namen <code>main</code>, <code>imageCon
 <li><code>[&quot;Test A&quot;, &quot;Test B&quot;]</code></li>
 </ul></li>
 </ul>
+<h1 id='ausgabe'>Ausgabe</h1>
+<p><code>WIP!</code></p>
 <h1 id='variablen'>Variablen</h1><div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">connection</span><span class="pi">:</span>
   <span class="na">main</span><span class="pi">:</span>
     <span class="na">path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">/inputA/{{input.checkboxA}}/"</span>
@@ -1123,6 +1142,10 @@ Hierbei werden drei Verbindungen mit den Namen <code>main</code>, <code>imageCon
 <td>cmd.json(root/rnd[0]) -&gt; test 1</td>
 </tr>
 </tbody></table>
+
+<ul>
+<li><code>include</code> wird verwendet um den Inhalt einer Projektdatei einzufügen. So kann z.B. der Inhalt der README mittels <code>{{include.README.md}}</code> geladen werden. Die Syntax ist allgemein <code>{{include.FILE_NAME}}</code></li>
+</ul>
 
 <!-- TODO: {{user.AGENT}}, {{input.inputA}}, {{cmd.json()}} ... -->
 <h1 id='errors'>Errors</h1>
