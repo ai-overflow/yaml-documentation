@@ -398,11 +398,14 @@
 </blockquote>
 <div class="highlight"><pre class="highlight plaintext"><code>Name                  Typ     Beschreibung
 ----                  ---     ---
-src                   Ordner  Ihre Projektdaten
-.gitignore            Datei   [optional] .gitignore
+src                   Ordner  Ihre Projektdaten zum ausführen des Projekts
+models                Ordner  Ordner mit ihrem Model
+etc                   Ordner  [optional] Sonstige Dateien, welche nicht zum ausführen benötigt werden (z.B. Trainingsskript)
+assets                Ordner  [optional] Bilder/Dateien zur Dokumentation
+.gitignore            Datei   .gitignore
 config.dl.yaml        Datei   Beschreibungsdatei ihres Projekts
-docker-compose.yml    Datei   docker-compose, welche ihr Projekt startet
-Dockerfile            Datei   Dockerfile
+docker-compose.yml    Datei   docker-compose
+Dockerfile            Datei   [optional] Dockerfile
 LICENSE               Datei   [optional] Lizenz ihres Projekts
 README.md             Datei   Projektbeschreibung
 </code></pre></div>
@@ -411,6 +414,11 @@ README.md             Datei   Projektbeschreibung
 <p>Optionale Elemente müssen bei der Abgabe nicht in ihrem Projekt vorhanden sein, sind aber &quot;nice to have&quot;.
 Weitere Elemente, welche nicht von &quot;optional&quot; abgedeckt sind, können ebenfalls in ihrem Hauptverzeichnis vorhanden sein.
 Alle Elemente, welche im gezeigten Beispiel nicht mit &quot;optional&quot; gekennzeichnet sind, müssen vorhanden sein.</p>
+
+<p>Bitte beachten Sie, dass Sie ihre Modelle speichern (z.B. mittels <code>model.save(&#39;abc&#39;)</code> (tensorflow) <code>torch.save(model.state_dict(), PATH)</code> (pytorch)) und anschließend in den Ordner <code>models</code> verschieben.
+Ihr Model wird mittels des <a href="https://developer.nvidia.com/nvidia-triton-inference-server">Triton Inference Server</a> ausgeliefert und dieser liest alle Dateien in diesem Ordner ein.
+Bitte legen Sie zusätzlich in ihrem Modelordner noch eine Datei <code>config.pbtxt</code> an.
+Der Inhalt wird anhand der <a href="https://github.com/triton-inference-server/server/blob/2af3ab977c31e152881e39127906447700ad1a2b/docs/model_configuration.md">Model Configuration</a> beschrieben.</p>
 
 <p>Bitte beachten Sie vor allem, dass wenn Sie eine Lizenz angeben, diese auch vereinbar ist mit der Lizenz von eventuellen ursprünglichen Werken.
 Dies bedeutet, sofern ihr Werk auf der Arbeit eines anderen Projektes aufbaut und dieses Projekt beispielsweise unter der GPL-Lizenz steht, so muss
@@ -1139,7 +1147,7 @@ Hierbei werden drei Verbindungen mit den Namen <code>main</code>, <code>imageCon
 <tr>
 <td>cmd.json()</td>
 <td>Liest einen Wert aus einer JSON/YAML aus</td>
-<td>cmd.json(root/rnd[0]) -&gt; test 1</td>
+<td>cmd.json(root/rnd[0]) -&gt; &quot;test 1&quot;   / cmd.json(root/rnd[]) -&gt; [&quot;test 1&quot;, &quot;test 2&quot;]</td>
 </tr>
 </tbody></table>
 
