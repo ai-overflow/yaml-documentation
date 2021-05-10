@@ -28,11 +28,14 @@ In dieser Dokumentation wird spezifiziert, wie Sie ihre Deep Learning Projekte m
 ```
 Name                  Typ     Beschreibung
 ----                  ---     ---
-src                   Ordner  Ihre Projektdaten
-.gitignore            Datei   [optional] .gitignore
+src                   Ordner  Ihre Projektdaten zum ausführen des Projekts
+models                Ordner  Ordner mit ihrem Model
+etc                   Ordner  [optional] Sonstige Dateien, welche nicht zum ausführen benötigt werden (z.B. Trainingsskript)
+assets                Ordner  [optional] Bilder/Dateien zur Dokumentation
+.gitignore            Datei   .gitignore
 config.dl.yaml        Datei   Beschreibungsdatei ihres Projekts
-docker-compose.yml    Datei   docker-compose, welche ihr Projekt startet
-Dockerfile            Datei   Dockerfile
+docker-compose.yml    Datei   docker-compose
+Dockerfile            Datei   [optional] Dockerfile
 LICENSE               Datei   [optional] Lizenz ihres Projekts
 README.md             Datei   Projektbeschreibung
 ```
@@ -42,6 +45,11 @@ Wenn Sie ihr Projekt erstellen muss dieses der Vorgegebenen Ordnerstruktur entsp
 Optionale Elemente müssen bei der Abgabe nicht in ihrem Projekt vorhanden sein, sind aber "nice to have".
 Weitere Elemente, welche nicht von "optional" abgedeckt sind, können ebenfalls in ihrem Hauptverzeichnis vorhanden sein.
 Alle Elemente, welche im gezeigten Beispiel nicht mit "optional" gekennzeichnet sind, müssen vorhanden sein.
+
+Bitte beachten Sie, dass Sie ihre Modelle speichern (z.B. mittels `model.save('abc')` (tensorflow) `torch.save(model.state_dict(), PATH)` (pytorch)) und anschließend in den Ordner `models` verschieben.
+Ihr Model wird mittels des [Triton Inference Server](https://developer.nvidia.com/nvidia-triton-inference-server) ausgeliefert und dieser liest alle Dateien in diesem Ordner ein.
+Bitte legen Sie zusätzlich in ihrem Modelordner noch eine Datei `config.pbtxt` an.
+Der Inhalt wird anhand der [Model Configuration](https://github.com/triton-inference-server/server/blob/2af3ab977c31e152881e39127906447700ad1a2b/docs/model_configuration.md) beschrieben.
 
 Bitte beachten Sie vor allem, dass wenn Sie eine Lizenz angeben, diese auch vereinbar ist mit der Lizenz von eventuellen ursprünglichen Werken.
 Dies bedeutet, sofern ihr Werk auf der Arbeit eines anderen Projektes aufbaut und dieses Projekt beispielsweise unter der GPL-Lizenz steht, so muss
@@ -676,7 +684,7 @@ rnd:
 
 | Name             | Beschreibung                             | Beispiel                                                                                                   |
 |------------------|------------------------------------------|------------------------------------------------------------------------------------------------------------|
-| cmd.json()       | Liest einen Wert aus einer JSON/YAML aus | cmd.json(root/rnd[0]) -> test 1                                                                            |
+| cmd.json()       | Liest einen Wert aus einer JSON/YAML aus | cmd.json(root/rnd[0]) -> "test 1"   / cmd.json(root/rnd[]) -> ["test 1", "test 2"]                        |
 
 - `include` wird verwendet um den Inhalt einer Projektdatei einzufügen. So kann z.B. der Inhalt der README mittels `{{include.README.md}}` geladen werden. Die Syntax ist allgemein `{{include.FILE_NAME}}`
 
