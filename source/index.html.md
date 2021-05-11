@@ -28,9 +28,9 @@ In dieser Dokumentation wird spezifiziert, wie Sie ihre Deep Learning Projekte m
 ```
 Name                  Typ     Beschreibung
 ----                  ---     ---
-src                   Ordner  Ihre Projektdaten zum ausführen des Projekts
+src                   Ordner  Ihre Projektdaten zum Ausführen des Projekts
 models                Ordner  Ordner mit ihrem Model
-etc                   Ordner  [optional] Sonstige Dateien, welche nicht zum ausführen benötigt werden (z.B. Trainingsskript)
+etc                   Ordner  [optional] Sonstige Dateien, welche nicht zum Ausführen benötigt werden (z.B. Trainingsskript, Jupyter Notebook)
 assets                Ordner  [optional] Bilder/Dateien zur Dokumentation
 .gitignore            Datei   .gitignore
 config.dl.yaml        Datei   Beschreibungsdatei ihres Projekts
@@ -54,6 +54,20 @@ Der Inhalt wird anhand der [Model Configuration](https://github.com/triton-infer
 Bitte beachten Sie vor allem, dass wenn Sie eine Lizenz angeben, diese auch vereinbar ist mit der Lizenz von eventuellen ursprünglichen Werken.
 Dies bedeutet, sofern ihr Werk auf der Arbeit eines anderen Projektes aufbaut und dieses Projekt beispielsweise unter der GPL-Lizenz steht, so muss
 ihr Werk ebenfalls unter einer der GPL kompatiblen Lizenz stehen.
+
+## `models`-Ordner
+
+```
+Datei                     Beschreibung
+---                       ---
+models                    Ordner mit allen Modellen
+  model_name              Ordner Name des Modells. Für jedes Modell jeweils ein Ordner
+    config.pbtxt          Konfiguration nach Model Configuration
+    1                     Version des Modells. Wenn verschiedene Iterationen ihres Modells existieren, so können Sie auch verschiedene Ordner anlegen.
+      model.savedmodel    Ordner mit ihrem gespeicherten Modell.
+```
+
+Eine Ausführliche Beschreibung des `models` Ordner finden Sie auf der Seite [Model Repository](https://github.com/triton-inference-server/server/blob/2af3ab977c31e152881e39127906447700ad1a2b/docs/model_repository.md).
 
 # Einstieg
 
@@ -643,9 +657,9 @@ input:
 ```yaml
 connection:
   main:
-    path: "/inputA/{{input.checkboxA}}/"
+    path: "/inputA/{{input.inputA}}/"
 input:
-  checkboxA:
+  inputA:
     type: "multiselect"
     values:
       - "Dude A"
@@ -653,17 +667,18 @@ input:
 
 Variablen können mittels `{{NAME}}` verwendet werden. Hierbei wird zuerst der Namensraum mittels `{{NS.NAME}}` angegeben. Mögliche Werte sind hierbei `input`, `vars`, `user` und `cmd` sein.
 
-- `input` referenziert Werte aus `input`. Der Name wird anhand des Schlüssels von Input gewählt Hierbei wird der Rückgabewert des jeweiligen Typs als durch den Namen der Variable ersetzt. Zum Beispiel wird `/input/{{input.inputA}}` zu `/input/DudeA`, wenn der `inputA` den Rückgabewert `Dude` erhält.
+- `input` referenziert Werte aus `input`. Der Name wird anhand des Schlüssels von Input gewählt Hierbei wird der Rückgabewert des jeweiligen Typs als durch den Namen der Variable ersetzt. Zum Beispiel wird `/input/{{input.inputA}}` zu `/input/DudeA`, wenn der `inputA` den Rückgabewert `Dude A` erhält (siehe Beispiel).
 
-- `vars` können Werte sein, welche aus einem Output erhalten wurden und zwischengespeichert werden.
+- `vars` können Werte sein, welche aus einem Output erhalten wurden und Zwischengespeichert werden. Diese können bei einem Output gesetzt werden und in einer erneuten Verbindung verwendet werden.
+  `vars` ist nur verfügbar, wenn diese in einem vorherigen Output gesetzt wurden und folglich nicht verfügbar bei einer `entryPoint` Verbindung.
 
 - `user` sind Informationen über einen Benutzer. Hierbei sind die folgenden Werte unterstützt:
 
 | Name             | Beschreibung                     | Beispiel                                                                                                   |
 |------------------|----------------------------------|------------------------------------------------------------------------------------------------------------|
-| user.AGENT       | User Agent                       | 5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36 |
-| user.Cookie.Name | Gibt Cookie des Benutzers zurück | test123                                                                                                    |
-| user.language    | Browsersprache des Benutzers     | en-US                                                                                                      |
+| user.Agent       | User Agent                       | 5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36 |
+| user.Cookie.Name | Gibt Cookie des Benutzers zurück | Cookie: Session-ID=test123; {{user.Cookie.Session-ID}} => test123                                          |
+| user.Language    | Browsersprache des Benutzers     | en-US                                                                                                      |
 
 - `cmd` sind spezielle Funktionen, welche z.B. verwendet werden können um JSON Werte auszulesen.
 
@@ -684,8 +699,9 @@ rnd:
 
 | Name             | Beschreibung                             | Beispiel                                                                                                   |
 |------------------|------------------------------------------|------------------------------------------------------------------------------------------------------------|
-| cmd.json()       | Liest einen Wert aus einer JSON/YAML aus | cmd.json(root/rnd[0]) -> "test 1"   / cmd.json(root/rnd[]) -> ["test 1", "test 2"]                        |
+| cmd.json()       | Liest einen Wert aus einer JSON/YAML aus | cmd.json(root/rnd[0]) -> "test 1"   / cmd.json(root/rnd[]) -> ["test 1", "test 2"]                         |
 
-- `include` wird verwendet um den Inhalt einer Projektdatei einzufügen. So kann z.B. der Inhalt der README mittels `{{include.README.md}}` geladen werden. Die Syntax ist allgemein `{{include.FILE_NAME}}`
+- `include` wird verwendet um den Inhalt einer Projektdatei einzufügen. So kann z.B. der Inhalt der README mittels `{{include.README.md}}` geladen werden. Die Syntax ist allgemein `{{include.FILE_NAME}}`.
+  `include` ist nur im Abschnitt `description` verfügbar!
 
 <!-- TODO: {{user.AGENT}}, {{input.inputA}}, {{cmd.json()}} ... -->
