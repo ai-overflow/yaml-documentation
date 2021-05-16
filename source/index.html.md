@@ -650,8 +650,37 @@ input:
 
 # Ausgabe
 
-`WIP!`
+```yaml
+output:
+  description:
+    label: "List of all Elements"
+    type: "list"
+```
 
+Alle Ausgabeelemente besitzen mindestens die Elemente `label` und `type`.
+`label` wird dazu verwendet um das Ausgabeelement in menschenlesbarer Form zu beschreiben.
+`type` unterstützt folgende Werte:
+
+| Bezeichnung   | Beschreibung                                                                                                                | Beispiel                               |
+|---------------|-----------------------------------------------------------------------------------------------------------------------------|----------------------------------------|
+| `html`        | Ausgabeelement ist HTML, welche direkt ausgegeben wird.                                                                     |                                        |
+| `list`        | Ausgabeelement ist ein eine Liste von Elementen.                                                                            | ![image](images/output/list.png)       |
+| `polygon`     | Ausgabeelement ist ein Polygon, welches dazu verwendet werden kann um Elemente hervorzuheben                                |                                        |
+| `iframe`      | Ausgabeelement ist ein iFrame, welches externen Inhalt einbinden kann.                                                      |                                        |
+
+## List
+
+```yaml
+output:
+  description:
+    label: "List of all Elements"
+    type: "list"
+    format:
+      labelName: "{{cmd.json(root/dense_2[]/name)}}"
+      labelValue: "{{cmd.json(root/dense_2[]/certainty)}}"
+      representation: "percentageBar"
+
+```
 # Variablen
 
 ```yaml
