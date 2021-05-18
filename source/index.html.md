@@ -486,7 +486,7 @@ Im Abschnitt `input` werden alle Eingabeelemente angegeben, welche zum verwenden
 Mögliche Werte für `type` sind:
 
 | Bezeichnung   | Beschreibung                                                                                                                | Beispiel                               |
-|---------------|-----------------------------------------------------------------------------------------------------------------------------|----------------------------------------|
+| ------------- | --------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
 | `image`       | Eingabeelement ist ein Bild, welches sowohl als Base64 als auch als Binärwert übergeben werden kann                         | ![image](images/input/images.png)      |
 | `input`       | Eingabeelement ist ein Freitext-Input. Die Länge, sowie Formatierung kann eingeschränkt werden                              | ![image](images/input/input.png)       |
 | `slider`      | Eingabeelement ist ein Slider, welcher in einem gewissen Bereich mit einer festgelegten Schrittweite Zahlenwerte ausgibt    | ![image](images/input/slider.png)      |
@@ -507,7 +507,7 @@ input:
 Der Aufbau eines Eingabeelements folgt immer dem Schema der Nachfolgenden Tabelle:
 
 | Schlüssel | Beschreibung                                    | Mögliche Werte                |
-|-----------|-------------------------------------------------|-------------------------------|
+| --------- | ----------------------------------------------- | ----------------------------- |
 | label     | Menschenlesbare Bezeichnung des Eingabeelements | Referenzbild, Bild A, Bumpmap |
 | type      | Typ des Eingabeelements                         | siehe [Tabelle](#eingabe)     |
 | values    | Parameter zur Konfiguration des Eingabeelements | divers                        |
@@ -531,9 +531,9 @@ input:
 Um ein Eingabeelement, welches Bild akzeptiert zu erstellen muss als Typ `image` angegeben werden. Hierbei können verschiedene Einschränkungen angegeben werden, wie in der Nachfolgenden Tabelle gesehen werden kann:
 
 | Schlüssel | Beschreibung                                                         | Mögliche Werte                | Pflicht |
-|-----------|----------------------------------------------------------------------|-------------------------------|---------|
-| accepts   | Liste akzeptierter MIME-Types. Muss **immer** `image/jpg` beinhalten | `image/jpg`, `image/png`, ... |   ❌    |
-| output    | Übergabewert der Datei                                               | `binary`, `base64`            |   ✔️    |
+| --------- | -------------------------------------------------------------------- | ----------------------------- | ------- |
+| accepts   | Liste akzeptierter MIME-Types. Muss **immer** `image/jpg` beinhalten | `image/jpg`, `image/png`, ... | ❌       |
+| output    | Übergabewert der Datei                                               | `binary`, `base64`            | ✔️       |
 
 ### Rückgabewert
 
@@ -560,7 +560,7 @@ input:
 ```
 
 | Schlüssel | Beschreibung                                             | Mögliche Werte              | Pflicht |
-|-----------|----------------------------------------------------------|-----------------------------|---------|
+| --------- | -------------------------------------------------------- | --------------------------- | ------- |
 | regex     | Regex zur Beschreibung möglicher Werte                   | `[A-Z]+`, `\s?(.*?)`        | ❌       |
 | length    | Länge der Eingabe. Wird mittels max und min spezifiziert | `min: 10` <br />  `max: 20` | ❌       |
 
@@ -585,11 +585,11 @@ input:
       stepSize: 0.1
 ```
 
-| Schlüssel | Beschreibung                              | Mögliche Werte       | Pflicht |
-|-----------|-------------------------------------------|----------------------|---------|
-| min       | Minimalwert, muss kleiner als `max` sein  | `10`, `0.01`, `-20`  | ❌       |
-| max       | Maximalwert, muss größer `min` sein       | `10000`, `1`, `0.5`  | ❌       |
-| stepSize  | Schrittgröße, muss größer 0 sein          | `1`, `100`, `0.0001` | ❌       |
+| Schlüssel | Beschreibung                             | Mögliche Werte       | Pflicht |
+| --------- | ---------------------------------------- | -------------------- | ------- |
+| min       | Minimalwert, muss kleiner als `max` sein | `10`, `0.01`, `-20`  | ❌       |
+| max       | Maximalwert, muss größer `min` sein      | `10000`, `1`, `0.5`  | ❌       |
+| stepSize  | Schrittgröße, muss größer 0 sein         | `1`, `100`, `0.0001` | ❌       |
 
 ### Rückgabewert
 
@@ -613,8 +613,8 @@ input:
 ```
 
 | Schlüssel | Beschreibung                    | Mögliche Werte             | Pflicht |
-|-----------|---------------------------------|----------------------------|---------|
-| -         | Liste an Auswählbaren Elementen | - `Test A`<br />- `Test B` | ✔️      |
+| --------- | ------------------------------- | -------------------------- | ------- |
+| -         | Liste an Auswählbaren Elementen | - `Test A`<br />- `Test B` | ✔️       |
 
 ### Rückgabewert
 
@@ -637,8 +637,8 @@ input:
 ```
 
 | Schlüssel | Beschreibung                    | Mögliche Werte             | Pflicht |
-|-----------|---------------------------------|----------------------------|---------|
-| -         | Liste an Auswählbaren Elementen | - `Test A`<br />- `Test B` | ✔️      |
+| --------- | ------------------------------- | -------------------------- | ------- |
+| -         | Liste an Auswählbaren Elementen | - `Test A`<br />- `Test B` | ✔️       |
 
 ### Rückgabewert
 
@@ -661,12 +661,27 @@ Alle Ausgabeelemente besitzen mindestens die Elemente `label` und `type`.
 `label` wird dazu verwendet um das Ausgabeelement in menschenlesbarer Form zu beschreiben.
 `type` unterstützt folgende Werte:
 
-| Bezeichnung   | Beschreibung                                                                                                                | Beispiel                               |
-|---------------|-----------------------------------------------------------------------------------------------------------------------------|----------------------------------------|
-| `html`        | Ausgabeelement ist HTML, welche direkt ausgegeben wird.                                                                     |                                        |
-| `list`        | Ausgabeelement ist ein eine Liste von Elementen.                                                                            | ![image](images/output/list.png)       |
-| `polygon`     | Ausgabeelement ist ein Polygon, welches dazu verwendet werden kann um Elemente hervorzuheben                                |                                        |
-| `iframe`      | Ausgabeelement ist ein iFrame, welches externen Inhalt einbinden kann.                                                      |                                        |
+| Bezeichnung | Beschreibung                                                                                                   | Beispiel                            |
+| ----------- | -------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
+| `html`      | Ausgabeelement ist HTML, welche direkt ausgegeben wird.                                                        | ![image](images/output/html.png)    |
+| `list`      | Ausgabeelement ist ein eine Liste von Elementen.                                                               | ![image](images/output/list.png)    |
+| `polygon`   | Ausgabeelement ist ein Polygon, welches dazu verwendet werden kann um Elemente hervorzuheben                   | ![image](images/output/polygon.png) |
+| `iframe`    | Ausgabeelement ist ein IFrame, welches externen Inhalt einbinden kann.                                         | ![image](images/output/iframe.png)  |
+| `image`     | Ausgabeelement ist ein Bild, welches entweder von extern oder durch eine spezifizierte Verbindung geladen wird | ![image](images/output/image.png)   |
+
+## HTML
+
+```yaml
+outputG:
+  label: "random html"
+  type: "html"
+  format:
+    labelValue: "{{cmd.json(connection.main/html[1])}}"
+```
+
+Der Typ `html` unterstützt als Eingabe HTML. Mit diesem Typ können komplexere Ausgabewerte abgebildet werden.
+
+<aside class="notice">Bitte binden Sie kein JavaScript oder Form Elemente (input, textarea, etc.) mittels HTML ein!</aside>
 
 ## List
 
@@ -681,6 +696,77 @@ output:
       representation: "percentageBar"
 
 ```
+
+List unterstützt folgende Werte für `representation`:
+
+| Bezeichnung     | Beschreibung                                                                                                 | Beispiel                                  |
+| --------------- | ------------------------------------------------------------------------------------------------------------ | ----------------------------------------- |
+| `discrete`      | Einzelne Werte können als String in `labelValue` angegeben werden.                                           | ![image](images/output/discrete.png)      |
+| `percentageBar` | Numerische Werte können in Prozent angegeben werden und besitzen zusätzliche eine Leiste zur Visualisierung. | ![image](images/output/percentageBar.png) |
+| `text`          | Ausgabeelemente sind nur Text und ohne Werte. Der Text wird durch `labelName`  spezifiziert.                 | ![image](images/output/text.png)          |
+
+`labelName` und `labelValue` können ein Array sein.
+
+## Polygon
+
+```yaml
+outputD:
+  label: "polygon inc."
+  type: "polygon"
+  format:
+    labelValue: "{{cmd.json(connection.main/polygons[]/coordinates)}}"
+    labelName: "{{cmd.json(connection.main/polygons[]/label)}}"
+    labelColor: "{{cmd.json(connection.main/polygons[]/color)}}"
+    representation: "polygon"
+    overlay: "input.image"
+```
+
+Mittels des Typs `polygon` können Polygone auf einem Overlay (z.B. ein Eingabebild) ausgegeben werden. Polygone werden mittels eines Arrays aus Koordinaten erzeugt. Zusätzlich können noch eine Farbe, sowie ein Label angegeben werden.
+Alle Werte können Arrays sein. Bei den Koordinaten kann so ein Array von Arrays angegeben werden um mehrere Polygone auf einem Overlay anzuzeigen.
+`overlay` ist eine Verknüpfung zu einem Input (Hierbei wird nicht die übliche `{{}}` Schreibweise benötigt, da dies bereits implizit geschieht).
+
+
+> JSON Format der Rückgabe
+
+```
+"polygons": [
+   {
+    "coordinates": [
+     {
+      "x": 0,
+      "y": 0
+     },
+     {
+      "x": 1000,
+      "y": 0
+     },
+     {
+      "x": 1000,
+      "y": 1000
+     },
+     {
+      "x": 0,
+      "y": 1000
+     }
+    ],
+    "label": "TEST",
+    "color": "#3F0"
+   }
+]
+```
+
+## IFrame
+
+```yaml
+outputH:
+  label: "random iframe"
+  type: "iframe"
+  format:
+    labelValue: "{{cmd.json(connection.main/iframe[0])}}"
+```
+
+`iframe` erwartet eine URL zur Anzeige in einem IFrame als `labelValue`. Mit diesem Element können z.B. Karten (OSM) oder sonstige Dienste eingebunden werden.
+
 # Variablen
 
 ```yaml
@@ -704,7 +790,7 @@ Variablen können mittels `{{NAME}}` verwendet werden. Hierbei wird zuerst der N
 - `user` sind Informationen über einen Benutzer. Hierbei sind die folgenden Werte unterstützt:
 
 | Name             | Beschreibung                     | Beispiel                                                                                                   |
-|------------------|----------------------------------|------------------------------------------------------------------------------------------------------------|
+| ---------------- | -------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | user.Agent       | User Agent                       | 5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36 |
 | user.Cookie.Name | Gibt Cookie des Benutzers zurück | Cookie: Session-ID=test123; {{user.Cookie.Session-ID}} => test123                                          |
 | user.Language    | Browsersprache des Benutzers     | en-US                                                                                                      |
@@ -726,9 +812,9 @@ rnd:
 }
 ```
 
-| Name             | Beschreibung                             | Beispiel                                                                                                   |
-|------------------|------------------------------------------|------------------------------------------------------------------------------------------------------------|
-| cmd.json()       | Liest einen Wert aus einer JSON/YAML aus | cmd.json(root/rnd[0]) -> "test 1"   / cmd.json(root/rnd[]) -> ["test 1", "test 2"]                         |
+| Name       | Beschreibung                             | Beispiel                                                                           |
+| ---------- | ---------------------------------------- | ---------------------------------------------------------------------------------- |
+| cmd.json() | Liest einen Wert aus einer JSON/YAML aus | cmd.json(root/rnd[0]) -> "test 1"   / cmd.json(root/rnd[]) -> ["test 1", "test 2"] |
 
 - `include` wird verwendet um den Inhalt einer Projektdatei einzufügen. So kann z.B. der Inhalt der README mittels `{{include.README.md}}` geladen werden. Die Syntax ist allgemein `{{include.FILE_NAME}}`.
   `include` ist nur im Abschnitt `description` verfügbar!
