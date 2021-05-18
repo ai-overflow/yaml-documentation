@@ -525,7 +525,7 @@ input:
       accepts:
         - "image/jpg"
         - "image/png"
-      output: "base64"
+      type: "base64"
 ```
 
 Um ein Eingabeelement, welches Bild akzeptiert zu erstellen muss als Typ `image` angegeben werden. Hierbei können verschiedene Einschränkungen angegeben werden, wie in der Nachfolgenden Tabelle gesehen werden kann:
