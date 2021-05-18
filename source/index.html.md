@@ -533,15 +533,15 @@ Um ein Eingabeelement, welches Bild akzeptiert zu erstellen muss als Typ `image`
 | Schlüssel | Beschreibung                                                         | Mögliche Werte                | Pflicht |
 | --------- | -------------------------------------------------------------------- | ----------------------------- | ------- |
 | accepts   | Liste akzeptierter MIME-Types. Muss **immer** `image/jpg` beinhalten | `image/jpg`, `image/png`, ... | ❌       |
-| output    | Übergabewert der Datei                                               | `binary`, `base64`            | ✔️       |
+| type      | Übergabewert der Datei                                               | `binary`, `base64`            | ✔️       |
 
 ### Rückgabewert
 
-Wenn `output` als `base64` definiert ist:
+Wenn `type` als `base64` definiert ist:
 
 - `data:image/jpeg;base64,/9j/4AAQSkZJRgABAQA...`
 
-Wenn `output` als `binary` definiert ist:
+Wenn `type` als `binary` definiert ist:
 
 - [binary blob]
 
