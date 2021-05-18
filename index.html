@@ -379,6 +379,20 @@
           </li>
           <li>
             <a href="#ausgabe" class="toc-h1 toc-link" data-title="Ausgabe">Ausgabe</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#html" class="toc-h2 toc-link" data-title="HTML">HTML</a>
+                  </li>
+                  <li>
+                    <a href="#list" class="toc-h2 toc-link" data-title="List">List</a>
+                  </li>
+                  <li>
+                    <a href="#polygon" class="toc-h2 toc-link" data-title="Polygon">Polygon</a>
+                  </li>
+                  <li>
+                    <a href="#iframe" class="toc-h2 toc-link" data-title="IFrame">IFrame</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#variablen" class="toc-h1 toc-link" data-title="Variablen">Variablen</a>
@@ -1095,8 +1109,142 @@ Hierbei werden drei Verbindungen mit den Namen <code>main</code>, <code>imageCon
 <li><code>[&quot;Test A&quot;, &quot;Test B&quot;]</code></li>
 </ul></li>
 </ul>
-<h1 id='ausgabe'>Ausgabe</h1>
-<p><code>WIP!</code></p>
+<h1 id='ausgabe'>Ausgabe</h1><div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">output</span><span class="pi">:</span>
+  <span class="na">description</span><span class="pi">:</span>
+    <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">List</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">all</span><span class="nv"> </span><span class="s">Elements"</span>
+    <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">list"</span>
+</code></pre></div>
+<p>Alle Ausgabeelemente besitzen mindestens die Elemente <code>label</code> und <code>type</code>.
+<code>label</code> wird dazu verwendet um das Ausgabeelement in menschenlesbarer Form zu beschreiben.
+<code>type</code> unterstützt folgende Werte:</p>
+
+<table><thead>
+<tr>
+<th>Bezeichnung</th>
+<th>Beschreibung</th>
+<th>Beispiel</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>html</code></td>
+<td>Ausgabeelement ist HTML, welche direkt ausgegeben wird.</td>
+<td><img src="images/output/html-d79707d7.png" alt="image" /></td>
+</tr>
+<tr>
+<td><code>list</code></td>
+<td>Ausgabeelement ist ein eine Liste von Elementen.</td>
+<td><img src="images/output/list-6fc1926d.png" alt="image" /></td>
+</tr>
+<tr>
+<td><code>polygon</code></td>
+<td>Ausgabeelement ist ein Polygon, welches dazu verwendet werden kann um Elemente hervorzuheben</td>
+<td><img src="images/output/polygon-b1b8da3f.png" alt="image" /></td>
+</tr>
+<tr>
+<td><code>iframe</code></td>
+<td>Ausgabeelement ist ein IFrame, welches externen Inhalt einbinden kann.</td>
+<td><img src="images/output/iframe-45a8a240.png" alt="image" /></td>
+</tr>
+<tr>
+<td><code>image</code></td>
+<td>Ausgabeelement ist ein Bild, welches entweder von extern oder durch eine spezifizierte Verbindung geladen wird</td>
+<td><img src="images/output/image-c09df537.png" alt="image" /></td>
+</tr>
+</tbody></table>
+<h2 id='html'>HTML</h2><div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">outputG</span><span class="pi">:</span>
+  <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">random</span><span class="nv"> </span><span class="s">html"</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">html"</span>
+  <span class="na">format</span><span class="pi">:</span>
+    <span class="na">labelValue</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{cmd.json(connection.main/html[1])}}"</span>
+</code></pre></div>
+<p>Der Typ <code>html</code> unterstützt als Eingabe HTML. Mit diesem Typ können komplexere Ausgabewerte abgebildet werden.</p>
+
+<aside class="notice">Bitte binden Sie kein JavaScript oder Form Elemente (input, textarea, etc.) mittels HTML ein!</aside>
+<h2 id='list'>List</h2><div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">output</span><span class="pi">:</span>
+  <span class="na">description</span><span class="pi">:</span>
+    <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">List</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">all</span><span class="nv"> </span><span class="s">Elements"</span>
+    <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">list"</span>
+    <span class="na">format</span><span class="pi">:</span>
+      <span class="na">labelName</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{cmd.json(root/dense_2[]/name)}}"</span>
+      <span class="na">labelValue</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{cmd.json(root/dense_2[]/certainty)}}"</span>
+      <span class="na">representation</span><span class="pi">:</span> <span class="s2">"</span><span class="s">percentageBar"</span>
+
+</code></pre></div>
+<p>List unterstützt folgende Werte für <code>representation</code>:</p>
+
+<table><thead>
+<tr>
+<th>Bezeichnung</th>
+<th>Beschreibung</th>
+<th>Beispiel</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>discrete</code></td>
+<td>Einzelne Werte können als String in <code>labelValue</code> angegeben werden.</td>
+<td><img src="images/output/discrete-8299649b.png" alt="image" /></td>
+</tr>
+<tr>
+<td><code>percentageBar</code></td>
+<td>Numerische Werte können in Prozent angegeben werden und besitzen zusätzliche eine Leiste zur Visualisierung.</td>
+<td><img src="images/output/percentageBar-441e6921.png" alt="image" /></td>
+</tr>
+<tr>
+<td><code>text</code></td>
+<td>Ausgabeelemente sind nur Text und ohne Werte. Der Text wird durch <code>labelName</code>  spezifiziert.</td>
+<td><img src="images/output/text-b605a526.png" alt="image" /></td>
+</tr>
+</tbody></table>
+
+<p><code>labelName</code> und <code>labelValue</code> können ein Array sein.</p>
+<h2 id='polygon'>Polygon</h2><div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">outputD</span><span class="pi">:</span>
+  <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">polygon</span><span class="nv"> </span><span class="s">inc."</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">polygon"</span>
+  <span class="na">format</span><span class="pi">:</span>
+    <span class="na">labelValue</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{cmd.json(connection.main/polygons[]/coordinates)}}"</span>
+    <span class="na">labelName</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{cmd.json(connection.main/polygons[]/label)}}"</span>
+    <span class="na">labelColor</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{cmd.json(connection.main/polygons[]/color)}}"</span>
+    <span class="na">representation</span><span class="pi">:</span> <span class="s2">"</span><span class="s">polygon"</span>
+    <span class="na">overlay</span><span class="pi">:</span> <span class="s2">"</span><span class="s">input.image"</span>
+</code></pre></div>
+<p>Mittels des Typs <code>polygon</code> können Polygone auf einem Overlay (z.B. ein Eingabebild) ausgegeben werden. Polygone werden mittels eines Arrays aus Koordinaten erzeugt. Zusätzlich können noch eine Farbe, sowie ein Label angegeben werden.
+Alle Werte können Arrays sein. Bei den Koordinaten kann so ein Array von Arrays angegeben werden um mehrere Polygone auf einem Overlay anzuzeigen.
+<code>overlay</code> ist eine Verknüpfung zu einem Input (Hierbei wird nicht die übliche <code>{{}}</code> Schreibweise benötigt, da dies bereits implizit geschieht).</p>
+
+<blockquote>
+<p>JSON Format der Rückgabe</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>"polygons": [
+   {
+    "coordinates": [
+     {
+      "x": 0,
+      "y": 0
+     },
+     {
+      "x": 1000,
+      "y": 0
+     },
+     {
+      "x": 1000,
+      "y": 1000
+     },
+     {
+      "x": 0,
+      "y": 1000
+     }
+    ],
+    "label": "TEST",
+    "color": "#3F0"
+   }
+]
+</code></pre></div><h2 id='iframe'>IFrame</h2><div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">outputH</span><span class="pi">:</span>
+  <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">random</span><span class="nv"> </span><span class="s">iframe"</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">iframe"</span>
+  <span class="na">format</span><span class="pi">:</span>
+    <span class="na">labelValue</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{cmd.json(connection.main/iframe[0])}}"</span>
+</code></pre></div>
+<p><code>iframe</code> erwartet eine URL zur Anzeige in einem IFrame als <code>labelValue</code>. Mit diesem Element können z.B. Karten (OSM) oder sonstige Dienste eingebunden werden.</p>
 <h1 id='variablen'>Variablen</h1><div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">connection</span><span class="pi">:</span>
   <span class="na">main</span><span class="pi">:</span>
     <span class="na">path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">/inputA/{{input.inputA}}/"</span>
