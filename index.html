@@ -914,7 +914,7 @@ Hierbei werden drei Verbindungen mit den Namen <code>main</code>, <code>imageCon
       <span class="na">accepts</span><span class="pi">:</span>
         <span class="pi">-</span> <span class="s2">"</span><span class="s">image/jpg"</span>
         <span class="pi">-</span> <span class="s2">"</span><span class="s">image/png"</span>
-      <span class="na">output</span><span class="pi">:</span> <span class="s2">"</span><span class="s">base64"</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">base64"</span>
 </code></pre></div>
 <p>Um ein Eingabeelement, welches Bild akzeptiert zu erstellen muss als Typ <code>image</code> angegeben werden. Hierbei können verschiedene Einschränkungen angegeben werden, wie in der Nachfolgenden Tabelle gesehen werden kann:</p>
 
@@ -933,20 +933,20 @@ Hierbei werden drei Verbindungen mit den Namen <code>main</code>, <code>imageCon
 <td>❌</td>
 </tr>
 <tr>
-<td>output</td>
+<td>type</td>
 <td>Übergabewert der Datei</td>
 <td><code>binary</code>, <code>base64</code></td>
 <td>✔️</td>
 </tr>
 </tbody></table>
 <h3 id='ruckgabewert'>Rückgabewert</h3>
-<p>Wenn <code>output</code> als <code>base64</code> definiert ist:</p>
+<p>Wenn <code>type</code> als <code>base64</code> definiert ist:</p>
 
 <ul>
 <li><code>data:image/jpeg;base64,/9j/4AAQSkZJRgABAQA...</code></li>
 </ul>
 
-<p>Wenn <code>output</code> als <code>binary</code> definiert ist:</p>
+<p>Wenn <code>type</code> als <code>binary</code> definiert ist:</p>
 
 <ul>
 <li>[binary blob]</li>
