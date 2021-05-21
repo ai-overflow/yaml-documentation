@@ -1207,7 +1207,7 @@ Hierbei werden drei Verbindungen mit den Namen <code>main</code>, <code>imageCon
     <span class="na">representation</span><span class="pi">:</span> <span class="s2">"</span><span class="s">polygon"</span>
     <span class="na">overlay</span><span class="pi">:</span> <span class="s2">"</span><span class="s">input.image"</span>
 </code></pre></div>
-<p>Mittels des Typs <code>polygon</code> können Polygone auf einem Overlay (z.B. ein Eingabebild) ausgegeben werden. Polygone werden mittels eines Arrays aus Koordinaten erzeugt. Zusätzlich können noch eine Farbe, sowie ein Label angegeben werden.
+<p>Mittels des Typs <code>polygon</code> können Polygone auf einem Overlay (z.B. ein Eingabebild) ausgegeben werden. Polygone werden mittels eines Arrays aus Koordinaten erzeugt. Zusätzlich können noch eine Farbe (HTML Farben, z.B. <code>#FF0000</code>/<code>rgba(255, 0, 0, 0.5)</code>), sowie ein Label angegeben werden.
 Alle Werte können Arrays sein. Bei den Koordinaten kann so ein Array von Arrays angegeben werden um mehrere Polygone auf einem Overlay anzuzeigen.
 <code>overlay</code> ist eine Verknüpfung zu einem Input (Hierbei wird nicht die übliche <code>{{}}</code> Schreibweise benötigt, da dies bereits implizit geschieht).</p>
 
@@ -1238,7 +1238,33 @@ Alle Werte können Arrays sein. Bei den Koordinaten kann so ein Array von Arrays
     "color": "#3F0"
    }
 ]
-</code></pre></div><h2 id='iframe'>IFrame</h2><div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">outputH</span><span class="pi">:</span>
+</code></pre></div>
+<p>Mögliche Werte für <code>representation</code> sind:</p>
+
+<table><thead>
+<tr>
+<th>Bezeichnung</th>
+<th>Beschreibung</th>
+<th>Beispiel</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>polygon</code></td>
+<td>Polygon erzeugt eine Linie, welche alle Polygone verbindet.</td>
+<td><img src="images/output/rep_polygon-eb1ad342.png" alt="image" /></td>
+</tr>
+<tr>
+<td><code>dots</code></td>
+<td>Erzeugt Punkte an der Stelle der Polygone</td>
+<td><img src="images/output/rep_dots-e6cc5bfb.png" alt="image" /></td>
+</tr>
+<tr>
+<td><code>filled</code></td>
+<td>Erzeugt ein gefülltes Polygon.</td>
+<td><img src="images/output/rep_filled-e5e9358e.png" alt="image" /></td>
+</tr>
+</tbody></table>
+<h2 id='iframe'>IFrame</h2><div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">outputH</span><span class="pi">:</span>
   <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">random</span><span class="nv"> </span><span class="s">iframe"</span>
   <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">iframe"</span>
   <span class="na">format</span><span class="pi">:</span>
