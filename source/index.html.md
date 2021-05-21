@@ -721,7 +721,7 @@ outputD:
     overlay: "input.image"
 ```
 
-Mittels des Typs `polygon` können Polygone auf einem Overlay (z.B. ein Eingabebild) ausgegeben werden. Polygone werden mittels eines Arrays aus Koordinaten erzeugt. Zusätzlich können noch eine Farbe, sowie ein Label angegeben werden.
+Mittels des Typs `polygon` können Polygone auf einem Overlay (z.B. ein Eingabebild) ausgegeben werden. Polygone werden mittels eines Arrays aus Koordinaten erzeugt. Zusätzlich können noch eine Farbe (HTML Farben, z.B. `#FF0000`/`rgba(255, 0, 0, 0.5)`), sowie ein Label angegeben werden.
 Alle Werte können Arrays sein. Bei den Koordinaten kann so ein Array von Arrays angegeben werden um mehrere Polygone auf einem Overlay anzuzeigen.
 `overlay` ist eine Verknüpfung zu einem Input (Hierbei wird nicht die übliche `{{}}` Schreibweise benötigt, da dies bereits implizit geschieht).
 
@@ -755,6 +755,13 @@ Alle Werte können Arrays sein. Bei den Koordinaten kann so ein Array von Arrays
 ]
 ```
 
+Mögliche Werte für `representation` sind:
+
+| Bezeichnung | Beschreibung                                                | Beispiel                                |
+| ----------- | ----------------------------------------------------------- | --------------------------------------- |
+| `polygon`   | Polygon erzeugt eine Linie, welche alle Polygone verbindet. | ![image](images/output/rep_polygon.png) |
+| `dots`      | Erzeugt Punkte an der Stelle der Polygone                   | ![image](images/output/rep_dots.png)    |
+| `filled`    | Erzeugt ein gefülltes Polygon.                              | ![image](images/output/rep_filled.png)  |
 ## IFrame
 
 ```yaml
