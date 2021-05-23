@@ -694,6 +694,8 @@ output:
       labelName: "{{cmd.json(root/dense_2[]/name)}}"
       labelValue: "{{cmd.json(root/dense_2[]/certainty)}}"
       representation: "percentageBar"
+    link:
+      with: "outputE"
 
 ```
 
@@ -706,6 +708,10 @@ List unterstützt folgende Werte für `representation`:
 | `text`          | Ausgabeelemente sind nur Text und ohne Werte. Der Text wird durch `labelName`  spezifiziert.                 | ![image](images/output/text.png)          |
 
 `labelName` und `labelValue` können ein Array sein.
+
+Eine Liste kann mittels `link` zu einem Polygon verbunden werden. Hierbei wird mittels des `with`-Attributes der Output angegeben mit welchem die Verknüpfung durchgeführt werden soll.
+Aktuell ist dies nur möglich, sofern das Verknüpfte Element vom Typ `polygon` ist.
+Die Verknüpfung erfolgt über die Werte, welche in `labelName` stehen. Aus diesem Grund muss sowohl in der Liste als auch im Verknüpften Element die selbe Anzahl an Elementen in `labelValue` vorhanden sein.
 
 ## Polygon
 
