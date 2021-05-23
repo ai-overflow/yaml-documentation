@@ -1168,6 +1168,8 @@ Hierbei werden drei Verbindungen mit den Namen <code>main</code>, <code>imageCon
       <span class="na">labelName</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{cmd.json(root/dense_2[]/name)}}"</span>
       <span class="na">labelValue</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{cmd.json(root/dense_2[]/certainty)}}"</span>
       <span class="na">representation</span><span class="pi">:</span> <span class="s2">"</span><span class="s">percentageBar"</span>
+    <span class="na">link</span><span class="pi">:</span>
+      <span class="na">with</span><span class="pi">:</span> <span class="s2">"</span><span class="s">outputE"</span>
 
 </code></pre></div>
 <p>List unterstützt folgende Werte für <code>representation</code>:</p>
@@ -1197,6 +1199,10 @@ Hierbei werden drei Verbindungen mit den Namen <code>main</code>, <code>imageCon
 </tbody></table>
 
 <p><code>labelName</code> und <code>labelValue</code> können ein Array sein.</p>
+
+<p>Eine Liste kann mittels <code>link</code> zu einem Polygon verbunden werden. Hierbei wird mittels des <code>with</code>-Attributes der Output angegeben mit welchem die Verknüpfung durchgeführt werden soll.
+Aktuell ist dies nur möglich, sofern das Verknüpfte Element vom Typ <code>polygon</code> ist.
+Die Verknüpfung erfolgt über die Werte, welche in <code>labelName</code> stehen. Aus diesem Grund muss sowohl in der Liste als auch im Verknüpften Element die selbe Anzahl an Elementen in <code>labelValue</code> vorhanden sein.</p>
 <h2 id='polygon'>Polygon</h2><div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">outputD</span><span class="pi">:</span>
   <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">polygon</span><span class="nv"> </span><span class="s">inc."</span>
   <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">polygon"</span>
