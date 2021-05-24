@@ -392,6 +392,9 @@
                   <li>
                     <a href="#iframe" class="toc-h2 toc-link" data-title="IFrame">IFrame</a>
                   </li>
+                  <li>
+                    <a href="#image-2" class="toc-h2 toc-link" data-title="Image">Image</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -1277,6 +1280,54 @@ Alle Werte können Arrays sein. Bei den Koordinaten kann so ein Array von Arrays
     <span class="na">labelValue</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{cmd.json(connection.main/iframe[0])}}"</span>
 </code></pre></div>
 <p><code>iframe</code> erwartet eine URL zur Anzeige in einem IFrame als <code>labelValue</code>. Mit diesem Element können z.B. Karten (OSM) oder sonstige Dienste eingebunden werden.</p>
+<h2 id='image-2'>Image</h2>
+<blockquote>
+<p>Bildtyp &quot;url&quot;</p>
+</blockquote>
+<div class="highlight"><pre class="highlight yaml tab-yaml"><code>  <span class="na">description</span><span class="pi">:</span>
+    <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">random</span><span class="nv"> </span><span class="s">image"</span>
+    <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">image"</span>
+    <span class="na">format</span><span class="pi">:</span>
+      <span class="na">labelName</span><span class="pi">:</span> <span class="s2">"</span><span class="s">test"</span>
+      <span class="na">labelValue</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{connection.main}}"</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">url"</span>
+</code></pre></div>
+<blockquote>
+<p>Bildtyp &quot;connection&quot;</p>
+</blockquote>
+<div class="highlight"><pre class="highlight yaml tab-yaml"><code> <span class="na">description</span><span class="pi">:</span>
+  <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">random</span><span class="nv"> </span><span class="s">image</span><span class="nv"> </span><span class="s">2"</span>
+    <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">image"</span>
+    <span class="na">format</span><span class="pi">:</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">connection"</span>
+      <span class="na">labelName</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{cmd.json(connection.imageURL/label)}}"</span>
+      <span class="na">connection</span><span class="pi">:</span>
+        <span class="na">ref</span><span class="pi">:</span> <span class="s2">"</span><span class="s">imageURL"</span>
+        <span class="na">vars</span><span class="pi">:</span>
+            <span class="na">id</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{cmd.json(connection.main/src)}}"</span>
+</code></pre></div>
+<p>Bilder können auf zwei verschiedene Arten eingebunden werden:</p>
+
+<table><thead>
+<tr>
+<th>Bezeichnung</th>
+<th>Beschreibung</th>
+<th>Beispiel</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>url</code></td>
+<td>URL erlaubt es eine Bild-URL (auch Base64 (data:image/jpeg;base64,/9j/4AAQ...) URL möglich) einzubinden.</td>
+<td><code>{{cmd.json(connection.main/label)}}</code>, <code>{{connection.main}}</code></td>
+</tr>
+<tr>
+<td><code>connection</code></td>
+<td>Erlaubt es ein Bild von einer anderen Verbindung nachzuladen</td>
+<td>siehe Beispiel</td>
+</tr>
+</tbody></table>
+
+<p><code>url</code> erlaubt es zusätzlich ein Bild mittels  <code>{{connection.main}}</code> anzugeben. Dies erlaubt es Bilder, welche nicht im JSON Format sondern direkt (z.B. mittels <code>send_file</code> von Flask) anzugeben.</p>
 <h1 id='variablen'>Variablen</h1><div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">connection</span><span class="pi">:</span>
   <span class="na">main</span><span class="pi">:</span>
     <span class="na">path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">/inputA/{{input.inputA}}/"</span>
