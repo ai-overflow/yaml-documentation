@@ -780,6 +780,44 @@ outputH:
 
 `iframe` erwartet eine URL zur Anzeige in einem IFrame als `labelValue`. Mit diesem Element können z.B. Karten (OSM) oder sonstige Dienste eingebunden werden.
 
+## Image
+
+> Bildtyp "url"
+
+```yaml
+  description:
+    label: "random image"
+    type: "image"
+    format:
+      labelName: "test"
+      labelValue: "{{connection.main}}"
+      type: "url"
+```
+
+> Bildtyp "connection"
+
+```yaml
+ description:
+  label: "random image 2"
+    type: "image"
+    format:
+      type: "connection"
+      labelName: "{{cmd.json(connection.imageURL/label)}}"
+      connection:
+        ref: "imageURL"
+        vars:
+            id: "{{cmd.json(connection.main/src)}}"
+```
+
+Bilder können auf zwei verschiedene Arten eingebunden werden:
+
+| Bezeichnung  | Beschreibung                                                                                             | Beispiel                                                     |
+| ------------ | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| `url`        | URL erlaubt es eine Bild-URL (auch Base64 (data:image/jpeg;base64,/9j/4AAQ...) URL möglich) einzubinden. | `{{cmd.json(connection.main/label)}}`, `{{connection.main}}` |
+| `connection` | Erlaubt es ein Bild von einer anderen Verbindung nachzuladen                                             | siehe Beispiel                                               |
+
+`url` erlaubt es zusätzlich ein Bild mittels  `{{connection.main}}` anzugeben. Dies erlaubt es Bilder, welche nicht im JSON Format sondern direkt (z.B. mittels `send_file` von Flask) anzugeben.
+
 # Variablen
 
 ```yaml
