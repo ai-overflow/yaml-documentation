@@ -871,3 +871,29 @@ rnd:
   `include` ist nur im Abschnitt `description` verfügbar!
 
 <!-- TODO: {{user.AGENT}}, {{input.inputA}}, {{cmd.json()}} ... -->
+
+# FAQ
+
+In diesem Abschnitt werden häufig gestellte Fragen aufgelistet
+
+### Wie starte ich das Beispielprojekt?
+
+Sie können das Beispielprojekt starten indem Sie in das Hauptverzeichnis des Projekts navigieren und `docker compose up` in der Konsole eingeben. Sie benötigen hierzu [Docker](https://www.docker.com/).
+
+### [Windows] Ich kann Docker nicht starten, da WSL/Hyper-V fehlt
+
+Bitte Befolgen Sie die Schritte dieser Anleitung: [https://docs.microsoft.com/en-us/windows/wsl/install-win10].
+
+### Docker benötigt Hardware Virtualisierung
+
+Bitte aktivieren Sie diese in ihrem BIOS. Dies ist je nach Prozessor abhängig. Bei Intel ist dies: VT-x und bei AMD: AMD-V.
+
+### Ich kann keine Python Packages installieren
+
+Wenn Sie Probleme haben Python Packages zu installieren, so können Sie auch anstelle von dem Alpine Docker Image das Default Image verwenden. Dies können Sie umsetzen indem Sie in der erste Zeile in der Dockerfile des
+Beispielprojekts `-alpine` entfernen (tiangolo/uwsgi-nginx-flask:python3.8-**alpine** → tiangolo/uwsgi-nginx-flask:python3.8).
+
+### Triton startet nach dem zweiten Start nicht mehr
+
+Wenn Sie ihr Projekt herunterfahren wollen müssen Sie dies mittels `docker compose down` umsetzen. Wenn Sie dies nicht getan haben, so wird Triton nicht mehr starten. Ist dies der Fall, so können Sie auch im abgeschalteten zustand Triton 
+mittels `docker compose down` wieder in einen funktionsfähigen zustand bringen.
