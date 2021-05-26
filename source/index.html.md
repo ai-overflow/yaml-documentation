@@ -728,7 +728,7 @@ outputD:
     showLabels: true
 ```
 
-Sofern größere Bilder angezeigt werden sollen, so ist es möglich die Labels, welche auf der rechten Seite angezeigt werden auszublenden mittels `showLabels`. Hierbei wird empfohlen externe Labels, wie im nachfolgenden Schritt beschrieben, zu aktivieren.
+Sofern größere Bilder angezeigt werden sollen, so ist es möglich die Labels, welche auf der rechten Seite angezeigt werden auszublenden mittels `showLabels`. Hierbei wird empfohlen externe Labels, wie im Abschnitt [List](#list) beschrieben, zu aktivieren.
 
 Mittels des Typs `polygon` können Polygone auf einem Overlay (z.B. ein Eingabebild) ausgegeben werden. Polygone werden mittels eines Arrays aus Koordinaten erzeugt. Zusätzlich können noch eine Farbe (HTML Farben, z.B. `#FF0000`/`rgba(255, 0, 0, 0.5)`), sowie ein Label angegeben werden.
 Alle Werte können Arrays sein. Bei den Koordinaten kann so ein Array von Arrays angegeben werden um mehrere Polygone auf einem Overlay anzuzeigen.
@@ -885,18 +885,18 @@ Sie können das Beispielprojekt starten indem Sie in das Hauptverzeichnis des Pr
 
 ### [Windows] Ich kann Docker nicht starten, da WSL/Hyper-V fehlt
 
-Bitte Befolgen Sie die Schritte dieser Anleitung: [https://docs.microsoft.com/en-us/windows/wsl/install-win10].
+Bitte Befolgen Sie die Schritte dieser Anleitung: [https://docs.microsoft.com/en-us/windows/wsl/install-win10](https://docs.microsoft.com/en-us/windows/wsl/install-win10).
 
 ### Docker benötigt Hardware Virtualisierung
 
 Bitte aktivieren Sie diese in ihrem BIOS. Dies ist je nach Prozessor abhängig. Bei Intel ist dies: VT-x und bei AMD: AMD-V.
 
-### Ich kann keine Python Packages installieren
+### Ich kann keine Python Packages installieren / Das installieren von Python Packages dauert sehr lange
 
 Wenn Sie Probleme haben Python Packages zu installieren, so können Sie auch anstelle von dem Alpine Docker Image das Default Image verwenden. Dies können Sie umsetzen indem Sie in der erste Zeile in der Dockerfile des
 Beispielprojekts `-alpine` entfernen (tiangolo/uwsgi-nginx-flask:python3.8-**alpine** → tiangolo/uwsgi-nginx-flask:python3.8).
 
-### Triton startet nach dem zweiten Start nicht mehr
+### Triton startet nach dem ersten Start nicht mehr /  failed to create symbolic link '/opt/tritonserver/lib/libnvidia-ml.so.1': File exists
 
-Wenn Sie ihr Projekt herunterfahren wollen müssen Sie dies mittels `docker compose down` umsetzen. Wenn Sie dies nicht getan haben, so wird Triton nicht mehr starten. Ist dies der Fall, so können Sie auch im abgeschalteten zustand Triton 
-mittels `docker compose down` wieder in einen funktionsfähigen zustand bringen.
+Wenn Sie ihr Projekt herunterfahren wollen müssen Sie dies mittels `docker compose down` umsetzen. Wenn Sie dies nicht getan haben, so wird Triton nicht mehr starten. Ist dies der Fall, so können Sie auch im abgeschalteten Zustand Triton
+mittels `docker compose down` wieder in einen funktionsfähigen Zustand bringen. Anschließend ist es wieder möglich mittels `docker compose up` Triton zu starten.
