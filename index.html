@@ -1235,7 +1235,10 @@ Die Verknüpfung erfolgt über die Werte, welche in <code>labelName</code> stehe
     <span class="na">labelColor</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{cmd.json(connection.main/polygons[]/color)}}"</span>
     <span class="na">representation</span><span class="pi">:</span> <span class="s2">"</span><span class="s">polygon"</span>
     <span class="na">overlay</span><span class="pi">:</span> <span class="s2">"</span><span class="s">input.image"</span>
+    <span class="na">showLabels</span><span class="pi">:</span> <span class="no">true</span>
 </code></pre></div>
+<p>Sofern größere Bilder angezeigt werden sollen, so ist es möglich die Labels, welche auf der rechten Seite angezeigt werden auszublenden mittels <code>showLabels</code>. Hierbei wird empfohlen externe Labels, wie im nachfolgenden Schritt beschrieben, zu aktivieren.</p>
+
 <p>Mittels des Typs <code>polygon</code> können Polygone auf einem Overlay (z.B. ein Eingabebild) ausgegeben werden. Polygone werden mittels eines Arrays aus Koordinaten erzeugt. Zusätzlich können noch eine Farbe (HTML Farben, z.B. <code>#FF0000</code>/<code>rgba(255, 0, 0, 0.5)</code>), sowie ein Label angegeben werden.
 Alle Werte können Arrays sein. Bei den Koordinaten kann so ein Array von Arrays angegeben werden um mehrere Polygone auf einem Overlay anzuzeigen.
 <code>overlay</code> ist eine Verknüpfung zu einem Input (Hierbei wird nicht die übliche <code>{{}}</code> Schreibweise benötigt, da dies bereits implizit geschieht).</p>
