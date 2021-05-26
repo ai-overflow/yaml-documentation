@@ -723,6 +723,7 @@ outputD:
     labelValue: "{{cmd.json(connection.main/polygons[]/coordinates)}}"
     labelName: "{{cmd.json(connection.main/polygons[]/label)}}"
     labelColor: "{{cmd.json(connection.main/polygons[]/color)}}"
+    labelLineWidth: "{{cmd.json(connection.main/polygons[]/lineWidth)}}"
     representation: "polygon"
     overlay: "input.image"
     showLabels: true
@@ -766,11 +767,11 @@ Alle Werte können Arrays sein. Bei den Koordinaten kann so ein Array von Arrays
 
 Mögliche Werte für `representation` sind:
 
-| Bezeichnung | Beschreibung                                                | Beispiel                                |
-| ----------- | ----------------------------------------------------------- | --------------------------------------- |
-| `polygon`   | Polygon erzeugt eine Linie, welche alle Polygone verbindet. | ![image](images/output/rep_polygon.png) |
-| `dots`      | Erzeugt Punkte an der Stelle der Polygone                   | ![image](images/output/rep_dots.png)    |
-| `filled`    | Erzeugt ein gefülltes Polygon.                              | ![image](images/output/rep_filled.png)  |
+| Bezeichnung | Beschreibung                                                                           | Beispiel                                |
+| ----------- | -------------------------------------------------------------------------------------- | --------------------------------------- |
+| `polygon`   | Polygon erzeugt eine Linie, welche alle Polygone verbindet.                            | ![image](images/output/rep_polygon.png) |
+| `dots`      | Erzeugt Punkte an der Stelle der Polygone. `labelLineWidth` ist der Radius der Punkte. | ![image](images/output/rep_dots.png)    |
+| `filled`    | Erzeugt ein gefülltes Polygon.                                                         | ![image](images/output/rep_filled.png)  |
 ## IFrame
 
 ```yaml
