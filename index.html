@@ -1233,6 +1233,7 @@ Die Verknüpfung erfolgt über die Werte, welche in <code>labelName</code> stehe
     <span class="na">labelValue</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{cmd.json(connection.main/polygons[]/coordinates)}}"</span>
     <span class="na">labelName</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{cmd.json(connection.main/polygons[]/label)}}"</span>
     <span class="na">labelColor</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{cmd.json(connection.main/polygons[]/color)}}"</span>
+    <span class="na">labelLineWidth</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{cmd.json(connection.main/polygons[]/lineWidth)}}"</span>
     <span class="na">representation</span><span class="pi">:</span> <span class="s2">"</span><span class="s">polygon"</span>
     <span class="na">overlay</span><span class="pi">:</span> <span class="s2">"</span><span class="s">input.image"</span>
     <span class="na">showLabels</span><span class="pi">:</span> <span class="no">true</span>
@@ -1287,7 +1288,7 @@ Alle Werte können Arrays sein. Bei den Koordinaten kann so ein Array von Arrays
 </tr>
 <tr>
 <td><code>dots</code></td>
-<td>Erzeugt Punkte an der Stelle der Polygone</td>
+<td>Erzeugt Punkte an der Stelle der Polygone. <code>labelLineWidth</code> ist der Radius der Punkte.</td>
 <td><img src="images/output/rep_dots-e6cc5bfb.png" alt="image" /></td>
 </tr>
 <tr>
