@@ -725,7 +725,10 @@ outputD:
     labelColor: "{{cmd.json(connection.main/polygons[]/color)}}"
     representation: "polygon"
     overlay: "input.image"
+    showLabels: true
 ```
+
+Sofern größere Bilder angezeigt werden sollen, so ist es möglich die Labels, welche auf der rechten Seite angezeigt werden auszublenden mittels `showLabels`. Hierbei wird empfohlen externe Labels, wie im nachfolgenden Schritt beschrieben, zu aktivieren.
 
 Mittels des Typs `polygon` können Polygone auf einem Overlay (z.B. ein Eingabebild) ausgegeben werden. Polygone werden mittels eines Arrays aus Koordinaten erzeugt. Zusätzlich können noch eine Farbe (HTML Farben, z.B. `#FF0000`/`rgba(255, 0, 0, 0.5)`), sowie ein Label angegeben werden.
 Alle Werte können Arrays sein. Bei den Koordinaten kann so ein Array von Arrays angegeben werden um mehrere Polygone auf einem Overlay anzuzeigen.
