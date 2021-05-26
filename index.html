@@ -413,10 +413,10 @@
                     <a href="#docker-benotigt-hardware-virtualisierung" class="toc-h2 toc-link" data-title="Docker benötigt Hardware Virtualisierung">Docker benötigt Hardware Virtualisierung</a>
                   </li>
                   <li>
-                    <a href="#ich-kann-keine-python-packages-installieren" class="toc-h2 toc-link" data-title="Ich kann keine Python Packages installieren">Ich kann keine Python Packages installieren</a>
+                    <a href="#ich-kann-keine-python-packages-installieren-das-installieren-von-python-packages-dauert-sehr-lange" class="toc-h2 toc-link" data-title="Ich kann keine Python Packages installieren / Das installieren von Python Packages dauert sehr lange">Ich kann keine Python Packages installieren / Das installieren von Python Packages dauert sehr lange</a>
                   </li>
                   <li>
-                    <a href="#triton-startet-nach-dem-zweiten-start-nicht-mehr" class="toc-h2 toc-link" data-title="Triton startet nach dem zweiten Start nicht mehr">Triton startet nach dem zweiten Start nicht mehr</a>
+                    <a href="#triton-startet-nach-dem-ersten-start-nicht-mehr-failed-to-create-symbolic-link-39-opt-tritonserver-lib-libnvidia-ml-so-1-39-file-exists" class="toc-h2 toc-link" data-title="Triton startet nach dem ersten Start nicht mehr /  failed to create symbolic link '/opt/tritonserver/lib/libnvidia-ml.so.1': File exists">Triton startet nach dem ersten Start nicht mehr /  failed to create symbolic link '/opt/tritonserver/lib/libnvidia-ml.so.1': File exists</a>
                   </li>
               </ul>
           </li>
@@ -1237,7 +1237,7 @@ Die Verknüpfung erfolgt über die Werte, welche in <code>labelName</code> stehe
     <span class="na">overlay</span><span class="pi">:</span> <span class="s2">"</span><span class="s">input.image"</span>
     <span class="na">showLabels</span><span class="pi">:</span> <span class="no">true</span>
 </code></pre></div>
-<p>Sofern größere Bilder angezeigt werden sollen, so ist es möglich die Labels, welche auf der rechten Seite angezeigt werden auszublenden mittels <code>showLabels</code>. Hierbei wird empfohlen externe Labels, wie im nachfolgenden Schritt beschrieben, zu aktivieren.</p>
+<p>Sofern größere Bilder angezeigt werden sollen, so ist es möglich die Labels, welche auf der rechten Seite angezeigt werden auszublenden mittels <code>showLabels</code>. Hierbei wird empfohlen externe Labels, wie im Abschnitt <a href="#list">List</a> beschrieben, zu aktivieren.</p>
 
 <p>Mittels des Typs <code>polygon</code> können Polygone auf einem Overlay (z.B. ein Eingabebild) ausgegeben werden. Polygone werden mittels eines Arrays aus Koordinaten erzeugt. Zusätzlich können noch eine Farbe (HTML Farben, z.B. <code>#FF0000</code>/<code>rgba(255, 0, 0, 0.5)</code>), sowie ein Label angegeben werden.
 Alle Werte können Arrays sein. Bei den Koordinaten kann so ein Array von Arrays angegeben werden um mehrere Polygone auf einem Overlay anzuzeigen.
@@ -1431,15 +1431,15 @@ Alle Werte können Arrays sein. Bei den Koordinaten kann so ein Array von Arrays
 <h3 id='wie-starte-ich-das-beispielprojekt'>Wie starte ich das Beispielprojekt?</h3>
 <p>Sie können das Beispielprojekt starten indem Sie in das Hauptverzeichnis des Projekts navigieren und <code>docker compose up</code> in der Konsole eingeben. Sie benötigen hierzu <a href="https://www.docker.com/">Docker</a>.</p>
 <h3 id='windows-ich-kann-docker-nicht-starten-da-wsl-hyper-v-fehlt'>[Windows] Ich kann Docker nicht starten, da WSL/Hyper-V fehlt</h3>
-<p>Bitte Befolgen Sie die Schritte dieser Anleitung: [https://docs.microsoft.com/en-us/windows/wsl/install-win10].</p>
+<p>Bitte Befolgen Sie die Schritte dieser Anleitung: <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">https://docs.microsoft.com/en-us/windows/wsl/install-win10</a>.</p>
 <h3 id='docker-benotigt-hardware-virtualisierung'>Docker benötigt Hardware Virtualisierung</h3>
 <p>Bitte aktivieren Sie diese in ihrem BIOS. Dies ist je nach Prozessor abhängig. Bei Intel ist dies: VT-x und bei AMD: AMD-V.</p>
-<h3 id='ich-kann-keine-python-packages-installieren'>Ich kann keine Python Packages installieren</h3>
+<h3 id='ich-kann-keine-python-packages-installieren-das-installieren-von-python-packages-dauert-sehr-lange'>Ich kann keine Python Packages installieren / Das installieren von Python Packages dauert sehr lange</h3>
 <p>Wenn Sie Probleme haben Python Packages zu installieren, so können Sie auch anstelle von dem Alpine Docker Image das Default Image verwenden. Dies können Sie umsetzen indem Sie in der erste Zeile in der Dockerfile des
 Beispielprojekts <code>-alpine</code> entfernen (tiangolo/uwsgi-nginx-flask:python3.8-<strong>alpine</strong> → tiangolo/uwsgi-nginx-flask:python3.8).</p>
-<h3 id='triton-startet-nach-dem-zweiten-start-nicht-mehr'>Triton startet nach dem zweiten Start nicht mehr</h3>
-<p>Wenn Sie ihr Projekt herunterfahren wollen müssen Sie dies mittels <code>docker compose down</code> umsetzen. Wenn Sie dies nicht getan haben, so wird Triton nicht mehr starten. Ist dies der Fall, so können Sie auch im abgeschalteten zustand Triton 
-mittels <code>docker compose down</code> wieder in einen funktionsfähigen zustand bringen.</p>
+<h3 id='triton-startet-nach-dem-ersten-start-nicht-mehr-failed-to-create-symbolic-link-39-opt-tritonserver-lib-libnvidia-ml-so-1-39-file-exists'>Triton startet nach dem ersten Start nicht mehr /  failed to create symbolic link &#39;/opt/tritonserver/lib/libnvidia-ml.so.1&#39;: File exists</h3>
+<p>Wenn Sie ihr Projekt herunterfahren wollen müssen Sie dies mittels <code>docker compose down</code> umsetzen. Wenn Sie dies nicht getan haben, so wird Triton nicht mehr starten. Ist dies der Fall, so können Sie auch im abgeschalteten Zustand Triton
+mittels <code>docker compose down</code> wieder in einen funktionsfähigen Zustand bringen. Anschließend ist es wieder möglich mittels <code>docker compose up</code> Triton zu starten.</p>
 <h1 id='errors'>Errors</h1>
 <p><code>WIP</code></p>
 
