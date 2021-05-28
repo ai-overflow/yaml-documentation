@@ -669,6 +669,25 @@ Alle Ausgabeelemente besitzen mindestens die Elemente `label` und `type`.
 | `iframe`    | Ausgabeelement ist ein IFrame, welches externen Inhalt einbinden kann.                                         | ![image](images/output/iframe.png)  |
 | `image`     | Ausgabeelement ist ein Bild, welches entweder von extern oder durch eine spezifizierte Verbindung geladen wird | ![image](images/output/image.png)   |
 
+## Wiederholung von Ausgabeelementen
+
+```yaml
+outputC:
+    label: "score output 3"
+    type: "list"
+    repeat:
+      iterator: "connection.main/dense_4/value"
+      title: "connection.main/dense_4/title"
+    format:
+      labelName: "{{cmd.iterator([]/name)}}"
+      labelValue: "{{cmd.iterator([]/value)}}"
+      representation: "discrete"
+```
+
+<img src="images/output/multiValue.png" alt="Wiederholung von Werten" height="200">
+
+Sie können Mittels des `repeat` Attributs ein Ausgabeelement wiederholen. Hierbei ist zu beachten, dass im `format`-Block Anschließend `cmd.iterator` verwendet werden muss um auf Elemente des Iterators zugreifen zu können.
+
 ## HTML
 
 ```yaml
@@ -867,9 +886,10 @@ rnd:
 }
 ```
 
-| Name       | Beschreibung                             | Beispiel                                                                           |
-| ---------- | ---------------------------------------- | ---------------------------------------------------------------------------------- |
-| cmd.json() | Liest einen Wert aus einer JSON/YAML aus | cmd.json(root/rnd[0]) -> "test 1"   / cmd.json(root/rnd[]) -> ["test 1", "test 2"] |
+| Name           | Beschreibung                                                                                              | Beispiel                                                                           |
+| -------------- | --------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| cmd.json()     | Liest einen Wert aus einer JSON/YAML aus                                                                  | cmd.json(root/rnd[0]) -> "test 1"   / cmd.json(root/rnd[]) -> ["test 1", "test 2"] |
+| cmd.iterator() | Ruft Elemente eines Iterators auf. Hierbei muss im übergeordneten Block ein `repeat`-Block Vorhanden sein | {{cmd.iterator([]/name)}}                                                          |
 
 - `include` wird verwendet um den Inhalt einer Projektdatei einzufügen. So kann z.B. der Inhalt der README mittels `{{include.README.md}}` geladen werden. Die Syntax ist allgemein `{{include.FILE_NAME}}`.
   `include` ist nur im Abschnitt `description` verfügbar!
@@ -901,3 +921,7 @@ Beispielprojekts `-alpine` entfernen (tiangolo/uwsgi-nginx-flask:python3.8-**alp
 
 Wenn Sie ihr Projekt herunterfahren wollen müssen Sie dies mittels `docker compose down` umsetzen. Wenn Sie dies nicht getan haben, so wird Triton nicht mehr starten. Ist dies der Fall, so können Sie auch im abgeschalteten Zustand Triton
 mittels `docker compose down` wieder in einen funktionsfähigen Zustand bringen. Anschließend ist es wieder möglich mittels `docker compose up` Triton zu starten.
+
+### Triton: error: creating server: Internal - failed to load all models
+
+Dieser Fehler tritt auf, wenn Sie noch kein Modell im `models`-Ordner haben. Wenn Sie nur Testen wollen ob es möglich ist Triton zu starten so können Sie den Model Control Mode auf "Explizit" stellen, indem Sie in der docker-compose dem Startbefehl von Triton ein `--model-control-mode=explicit` anhängen.
