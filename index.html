@@ -381,6 +381,9 @@
             <a href="#ausgabe" class="toc-h1 toc-link" data-title="Ausgabe">Ausgabe</a>
               <ul class="toc-list-h2">
                   <li>
+                    <a href="#wiederholung-von-ausgabeelementen" class="toc-h2 toc-link" data-title="Wiederholung von Ausgabeelementen">Wiederholung von Ausgabeelementen</a>
+                  </li>
+                  <li>
                     <a href="#html" class="toc-h2 toc-link" data-title="HTML">HTML</a>
                   </li>
                   <li>
@@ -417,6 +420,9 @@
                   </li>
                   <li>
                     <a href="#triton-startet-nach-dem-ersten-start-nicht-mehr-failed-to-create-symbolic-link-39-opt-tritonserver-lib-libnvidia-ml-so-1-39-file-exists" class="toc-h2 toc-link" data-title="Triton startet nach dem ersten Start nicht mehr /  failed to create symbolic link '/opt/tritonserver/lib/libnvidia-ml.so.1': File exists">Triton startet nach dem ersten Start nicht mehr /  failed to create symbolic link '/opt/tritonserver/lib/libnvidia-ml.so.1': File exists</a>
+                  </li>
+                  <li>
+                    <a href="#triton-error-creating-server-internal-failed-to-load-all-models" class="toc-h2 toc-link" data-title="Triton: error: creating server: Internal - failed to load all models">Triton: error: creating server: Internal - failed to load all models</a>
                   </li>
               </ul>
           </li>
@@ -1174,6 +1180,20 @@ Hierbei werden drei Verbindungen mit den Namen <code>main</code>, <code>imageCon
 <td><img src="images/output/image-c09df537.png" alt="image" /></td>
 </tr>
 </tbody></table>
+<h2 id='wiederholung-von-ausgabeelementen'>Wiederholung von Ausgabeelementen</h2><div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">outputC</span><span class="pi">:</span>
+    <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">score</span><span class="nv"> </span><span class="s">output</span><span class="nv"> </span><span class="s">3"</span>
+    <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">list"</span>
+    <span class="na">repeat</span><span class="pi">:</span>
+      <span class="na">iterator</span><span class="pi">:</span> <span class="s2">"</span><span class="s">connection.main/dense_4/value"</span>
+      <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">connection.main/dense_4/title"</span>
+    <span class="na">format</span><span class="pi">:</span>
+      <span class="na">labelName</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{cmd.iterator([]/name)}}"</span>
+      <span class="na">labelValue</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{cmd.iterator([]/value)}}"</span>
+      <span class="na">representation</span><span class="pi">:</span> <span class="s2">"</span><span class="s">discrete"</span>
+</code></pre></div>
+<p><img src="images/output/multiValue-631cc779.png" alt="Wiederholung von Werten" height="200"></p>
+
+<p>Sie können Mittels des <code>repeat</code> Attributs ein Ausgabeelement wiederholen. Hierbei ist zu beachten, dass im <code>format</code>-Block Anschließend <code>cmd.iterator</code> verwendet werden muss um auf Elemente des Iterators zugreifen zu können.</p>
 <h2 id='html'>HTML</h2><div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">outputG</span><span class="pi">:</span>
   <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">random</span><span class="nv"> </span><span class="s">html"</span>
   <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">html"</span>
@@ -1419,6 +1439,11 @@ Alle Werte können Arrays sein. Bei den Koordinaten kann so ein Array von Arrays
 <td>Liest einen Wert aus einer JSON/YAML aus</td>
 <td>cmd.json(root/rnd[0]) -&gt; &quot;test 1&quot;   / cmd.json(root/rnd[]) -&gt; [&quot;test 1&quot;, &quot;test 2&quot;]</td>
 </tr>
+<tr>
+<td>cmd.iterator()</td>
+<td>Ruft Elemente eines Iterators auf. Hierbei muss im übergeordneten Block ein <code>repeat</code>-Block Vorhanden sein</td>
+<td>{{cmd.iterator([]/name)}}</td>
+</tr>
 </tbody></table>
 
 <ul>
@@ -1441,6 +1466,8 @@ Beispielprojekts <code>-alpine</code> entfernen (tiangolo/uwsgi-nginx-flask:pyth
 <h3 id='triton-startet-nach-dem-ersten-start-nicht-mehr-failed-to-create-symbolic-link-39-opt-tritonserver-lib-libnvidia-ml-so-1-39-file-exists'>Triton startet nach dem ersten Start nicht mehr /  failed to create symbolic link &#39;/opt/tritonserver/lib/libnvidia-ml.so.1&#39;: File exists</h3>
 <p>Wenn Sie ihr Projekt herunterfahren wollen müssen Sie dies mittels <code>docker compose down</code> umsetzen. Wenn Sie dies nicht getan haben, so wird Triton nicht mehr starten. Ist dies der Fall, so können Sie auch im abgeschalteten Zustand Triton
 mittels <code>docker compose down</code> wieder in einen funktionsfähigen Zustand bringen. Anschließend ist es wieder möglich mittels <code>docker compose up</code> Triton zu starten.</p>
+<h3 id='triton-error-creating-server-internal-failed-to-load-all-models'>Triton: error: creating server: Internal - failed to load all models</h3>
+<p>Dieser Fehler tritt auf, wenn Sie noch kein Modell im <code>models</code>-Ordner haben. Wenn Sie nur Testen wollen ob es möglich ist Triton zu starten so können Sie den Model Control Mode auf &quot;Explizit&quot; stellen, indem Sie in der docker-compose dem Startbefehl von Triton ein <code>--model-control-mode=explicit</code> anhängen.</p>
 <h1 id='errors'>Errors</h1>
 <p><code>WIP</code></p>
 
