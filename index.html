@@ -463,7 +463,7 @@ README.md             Datei   Projektbeschreibung
 Weitere Elemente, welche nicht von &quot;optional&quot; abgedeckt sind, können ebenfalls in ihrem Hauptverzeichnis vorhanden sein.
 Alle Elemente, welche im gezeigten Beispiel nicht mit &quot;optional&quot; gekennzeichnet sind, müssen vorhanden sein.</p>
 
-<p>Bitte beachten Sie, dass Sie ihre Modelle speichern (z.B. mittels <code>model.save(&#39;abc&#39;)</code> (tensorflow) <code>torch.save(model.state_dict(), PATH)</code> (pytorch)) und anschließend in den Ordner <code>models</code> verschieben.
+<p>Bitte beachten Sie, dass Sie ihre Modelle speichern (z.B. mittels <code>model.save(&#39;abc&#39;)</code> (tensorflow / keras) <code>torch.save(model.state_dict(), PATH)</code> (pytorch)) und anschließend in den Ordner <code>models</code> verschieben.
 Ihr Model wird mittels des <a href="https://developer.nvidia.com/nvidia-triton-inference-server">Triton Inference Server</a> ausgeliefert und dieser liest alle Dateien in diesem Ordner ein.
 Bitte legen Sie zusätzlich in ihrem Modelordner noch eine Datei <code>config.pbtxt</code> an.
 Der Inhalt wird anhand der <a href="https://github.com/triton-inference-server/server/blob/2af3ab977c31e152881e39127906447700ad1a2b/docs/model_configuration.md">Model Configuration</a> beschrieben.</p>
@@ -1316,7 +1316,36 @@ Alle Werte können Arrays sein. Bei den Koordinaten kann so ein Array von Arrays
 <td>Erzeugt ein gefülltes Polygon.</td>
 <td><img src="images/output/rep_filled-e5e9358e.png" alt="image" /></td>
 </tr>
+<tr>
+<td><code>line</code></td>
+<td>Erzeugt eine Menge an Linien.</td>
+<td><img src="images/output/rep_line-b682149c.png" alt="image" /></td>
+</tr>
 </tbody></table>
+
+<blockquote>
+<p>JSON Format für <code>representation: line</code></p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>"lines": [
+   {
+    "coordinates": [
+      {
+        "from": {
+          "x": 1,
+          "y": 2
+        },
+        "to": {
+          "x": 2,
+          "y": 4
+        }
+      }
+    ],
+    "label": "TEST",
+    "color": "#3F0"
+   }
+]
+</code></pre></div>
+<p>Lines benötigen zur korrekten Darstellung als Value Wert eine Objekt mit einem <code>from</code> und <code>two</code> Wert. Der Innere Aufbau dieser Werte ist gleich zu dem Aufbau der sonstigen Koordinatenangaben.</p>
 <h2 id='iframe'>IFrame</h2><div class="highlight"><pre class="highlight yaml tab-yaml"><code><span class="na">outputH</span><span class="pi">:</span>
   <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">random</span><span class="nv"> </span><span class="s">iframe"</span>
   <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">iframe"</span>
