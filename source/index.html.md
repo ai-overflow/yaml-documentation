@@ -46,7 +46,7 @@ Optionale Elemente müssen bei der Abgabe nicht in ihrem Projekt vorhanden sein,
 Weitere Elemente, welche nicht von "optional" abgedeckt sind, können ebenfalls in ihrem Hauptverzeichnis vorhanden sein.
 Alle Elemente, welche im gezeigten Beispiel nicht mit "optional" gekennzeichnet sind, müssen vorhanden sein.
 
-Bitte beachten Sie, dass Sie ihre Modelle speichern (z.B. mittels `model.save('abc')` (tensorflow) `torch.save(model.state_dict(), PATH)` (pytorch)) und anschließend in den Ordner `models` verschieben.
+Bitte beachten Sie, dass Sie ihre Modelle speichern (z.B. mittels `model.save('abc')` (tensorflow / keras) `torch.save(model.state_dict(), PATH)` (pytorch)) und anschließend in den Ordner `models` verschieben.
 Ihr Model wird mittels des [Triton Inference Server](https://developer.nvidia.com/nvidia-triton-inference-server) ausgeliefert und dieser liest alle Dateien in diesem Ordner ein.
 Bitte legen Sie zusätzlich in ihrem Modelordner noch eine Datei `config.pbtxt` an.
 Der Inhalt wird anhand der [Model Configuration](https://github.com/triton-inference-server/server/blob/2af3ab977c31e152881e39127906447700ad1a2b/docs/model_configuration.md) beschrieben.
@@ -791,6 +791,33 @@ Mögliche Werte für `representation` sind:
 | `polygon`   | Polygon erzeugt eine Linie, welche alle Polygone verbindet.                            | ![image](images/output/rep_polygon.png) |
 | `dots`      | Erzeugt Punkte an der Stelle der Polygone. `labelLineWidth` ist der Radius der Punkte. | ![image](images/output/rep_dots.png)    |
 | `filled`    | Erzeugt ein gefülltes Polygon.                                                         | ![image](images/output/rep_filled.png)  |
+| `line`      | Erzeugt eine Menge an Linien.                                                          | ![image](images/output/rep_line.png)    |
+
+> JSON Format für `representation: line`
+
+```
+"lines": [
+   {
+    "coordinates": [
+      {
+        "from": {
+          "x": 1,
+          "y": 2
+        },
+        "to": {
+          "x": 2,
+          "y": 4
+        }
+      }
+    ],
+    "label": "TEST",
+    "color": "#3F0"
+   }
+]
+```
+
+Lines benötigen zur korrekten Darstellung als Value Wert eine Objekt mit einem `from` und `two` Wert. Der Innere Aufbau dieser Werte ist gleich zu dem Aufbau der sonstigen Koordinatenangaben.
+
 ## IFrame
 
 ```yaml
